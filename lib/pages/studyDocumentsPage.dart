@@ -15,29 +15,15 @@ class StudyDocumentsPage extends StatefulWidget {
   State<StudyDocumentsPage> createState() => _StudyDocumentsPageState();
 }
 
-class _StudyDocumentsPageState extends State<StudyDocumentsPage>
-    with SingleTickerProviderStateMixin {
+class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
   final DocumentDao _documentDao = DocumentDao();
   final CourseDao _courseDao = CourseDao();
 
-  late TabController _tabController;
+  int _selectedTabIndex = 0; // 0: Tất cả, 1: Bài giảng, 2: Bài tập, 3: Tham khảo
   String? _selectedCourseId;
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _tabController.addListener(() => setState(() {}));
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   DocumentType? _getCurrentTabType() {
-    switch (_tabController.index) {
+    switch (_selectedTabIndex) {
       case 1:
         return DocumentType.lecture;
       case 2:
@@ -73,21 +59,21 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage>
           // Header Bar
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
               child: Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Kho Tài liệu Học tập',
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.onSurface,
+                          letterSpacing: -0.5,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         'Lưu trữ bài giảng, bài tập và tài liệu tham khảo',
                         style: TextStyle(
@@ -188,10 +174,21 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage>
 
           // Document List
           StreamBuilder<List<StudyDocument>>(
-            stream: _documentDao.watchAll(type: currentType, courseId: _selectedCourseId),
-            initialData: _documentDao.getAll(type: currentType, courseId: _selectedCourseId),
+            stream: _documentDao.watchAll(),
+            initialData: _documentDao.getAll(),
             builder: (context, snapshot) {
-              final documents = snapshot.data ?? [];
+              final allDocuments = snapshot.data ?? _documentDao.getAll();
+
+              // Instant filter by Tab Type
+              var documents = allDocuments;
+              if (currentType != null) {
+                documents = documents.where((d) => d.type == currentType).toList();
+              }
+
+              // Instant filter by Course
+              if (_selectedCourseId != null && _selectedCourseId!.isNotEmpty && _selectedCourseId != 'all') {
+                documents = documents.where((d) => d.courseId == _selectedCourseId).toList();
+              }
 
               if (documents.isEmpty) {
                 return SliverToBoxAdapter(
@@ -244,12 +241,14 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage>
   }
 
   Widget _buildTabPill(String label, int index) {
-    final isSelected = _tabController.index == index;
+    final isSelected = _selectedTabIndex == index;
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          _tabController.animateTo(index);
+          setState(() {
+            _selectedTabIndex = index;
+          });
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 9),

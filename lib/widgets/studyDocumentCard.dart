@@ -211,7 +211,7 @@ class StudyDocumentCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    decoration: isDone ? TextDecoration.lineThrough : null,
+                    // decoration: isDone ? TextDecoration.lineThrough : null,
                     color: isDone ? Colors.grey : theme.colorScheme.onSurface,
                   ),
                   maxLines: 2,
