@@ -58,6 +58,18 @@ Khi vận hành trên mô hình cục bộ hoặc máy chủ vật lý truyền 
 5. **Chi phí và rủi ro nếu tự vận hành máy chủ riêng (On-Premise Server Burden):**
    - Tự dựng máy chủ riêng đòi hỏi chi phí mua phần cứng, duy trì mạng IP tĩnh 24/7, tiền điện và chi phí bảo trì lỗ hổng bảo mật.
 
+### 2.2. Bảng So Sánh Đối Đầu: Mô Hình Truyền Thống vs. Mô Hình Sau Khi Tích Hợp Cloud
+
+| Tiêu chí So sánh | Mô hình Truyền thống (Local / On-Premise) | Mô hình Sau Tích hợp Cloud (Firebase Hybrid Cloud) | Lợi ích Đạt được |
+| :--- | :--- | :--- | :--- |
+| **Kiến trúc Hạ tầng** | Cục bộ trên từng máy hoặc Máy chủ vật lý tự dựng | Hybrid Cloud (Local-First kết hợp Google Cloud Serverless) | Tận dụng tốc độ của máy khách và sức mạnh của Cloud |
+| **Khả năng Truy cập & Đồng bộ** | Bị cô lập (Data Silo); chỉ truy cập được trên 1 thiết bị đơn lẻ | Đồng bộ đa nền tảng (Web, Mobile, Desktop) theo thời gian thực | Học tập mọi lúc, mọi nơi (Anytime, Anywhere) |
+| **Lưu trữ Tệp tin (Storage)** | Giới hạn bởi ổ cứng máy (dễ đầy bộ nhớ điện thoại) | Google Cloud Storage (Object Storage không giới hạn dung lượng) | Lưu trữ hàng nghìn slide PDF, giáo trình không lo tràn bộ nhớ |
+| **An toàn Dữ liệu & Sao lưu** | Rủi ro mất trắng nếu hỏng máy, mất điện thoại (Điểm hỏng đơn - SPOF) | Tự động sao lưu phân tán đa vùng (Multi-Region), SLA 99.99% | Không bao giờ mất dữ liệu học tập quan trọng |
+| **Bảo mật & Phân quyền** | Khó kiểm soát, chia sẻ file qua USB/Zalo dễ lộ lọt | Xác thực Google Sign-In, Phân quyền IAM (Owner/Editor/Viewer) & Rules | Bảo mật cấp doanh nghiệp, kiểm soát truy cập chặt chẽ |
+| **Khả năng Mở rộng (Scalability)** | Rất khó; phải mua thêm ổ cứng, nâng cấp máy chủ thủ công | Tự động co giãn (Auto-scaling) từ vài người đến hàng chục nghìn người | Hệ thống luôn mượt mà khi lượng người dùng tăng đột biến |
+| **Chi phí Đầu tư & Vận hành** | Tốn kém (mua máy chủ, IP tĩnh, tiền điện 24/7, bảo trì phần cứng) | Gói Google Spark Plan miễn phí 100%, không tốn chi phí phần cứng | Tiết kiệm tối đa ngân sách triển khai của sinh viên |
+
 ---
 
 ## 3. Checklist 3: Lựa chọn mô hình triển khai Cloud phù hợp & Các dịch vụ cụ thể
