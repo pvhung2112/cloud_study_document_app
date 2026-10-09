@@ -373,7 +373,7 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
                         SizedBox(width: 8),
                         Text('Tài khoản Google:', style: TextStyle(fontSize: 12, color: Colors.black54)),
                         Spacer(),
-                        Text('sinhvien.hung@gmail.com', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        Text('phamvanhung21122004@gmail.com', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                       ],
                     ),
                     SizedBox(height: 8),

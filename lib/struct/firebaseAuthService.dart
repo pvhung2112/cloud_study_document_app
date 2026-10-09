@@ -36,10 +36,10 @@ class FirebaseAuthService {
     // final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     // return userCredential.user;
 
-    // Giả lập phiên đăng nhập thành công cho đồ án:
+   
     _currentUser = MockFirebaseUser(
       uid: 'user-google-1029384756',
-      email: 'sinhvien.hung@gmail.com',
+      email: 'phamvanhung21122004@gmail.com',
       displayName: 'Phạm Văn Hưng',
       photoUrl: 'https://lh3.googleusercontent.com/a/default-avatar',
     );
