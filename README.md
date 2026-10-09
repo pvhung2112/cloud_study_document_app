@@ -1,4 +1,4 @@
-﻿# 📚 Ứng Dụng Quản Lý Tài Liệu Học Tập (Study Document App)
+# 📚 Ứng Dụng Quản Lý Tài Liệu Học Tập (Study Document App)
 ### Kiến Trúc Cashew Local-First Tích Hợp Google Firebase Cloud
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
@@ -113,15 +113,18 @@ flutter run -d windows
 
 Toàn bộ tài liệu giải trình kỹ thuật và slide nhóm được đính kèm đầy đủ trong dự án:
 
-1. 📄 **Báo Cáo Tích Hợp Google Cloud Firebase:**  
+1. 🎨 **Slide Thuyết Trình (Canva chính thức):**  
+   👉 [Slide thuyết trình](https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0)
+
+2. 📄 **Báo Cáo Tích Hợp Google Cloud Firebase:**  
    👉 [`BAO_CAO_TICH_HOP_CLOUD_FIREBASE.md`](./BAO_CAO_TICH_HOP_CLOUD_FIREBASE.md)  
    *(Giải thích chi tiết các mục phân tích kiến trúc, điểm nghẽn hạ tầng, lựa chọn dịch vụ Cloud, giải thuật đồng bộ 2 chiều, đánh giá chi phí - bảo mật - hiệu suất và hướng dẫn setup).*
 
-2. 🖥️ **Slide Thuyết Trình Nhóm Tương Tác (HTML/JS):**  
+3. 🖥️ **Slide Thuyết Trình Nhóm Tương Tác Offline (HTML/JS):**  
    👉 [`SLIDE_THUYET_TRINH_FIREBASE.html`](./SLIDE_THUYET_TRINH_FIREBASE.html)  
    *(Trình chiếu trực tiếp trên mọi trình duyệt: hiệu ứng chuyển slide, phím mũi tên `←` `→`, giao diện hiện đại phục vụ báo cáo).*
 
-3. 📝 **Đề Cương Nội Dung Slide (Markdown):**  
+4. 📝 **Đề Cương Nội Dung Slide (Markdown):**  
    👉 [`SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md`](./SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md)
 
 ---

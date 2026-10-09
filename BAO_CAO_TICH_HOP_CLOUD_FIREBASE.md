@@ -3,6 +3,7 @@
 - **Đề tài:** Phân tích và Lập phương án tích hợp Cloud cho Hệ thống Quản lý Tài liệu
 - **Dự án ứng dụng:** `study_document_app` (Kiến trúc Cashew Local-First tích hợp Google Firebase Cloud)
 - **Kho lưu trữ GitHub:** [https://github.com/pvhung2112/cloud_study_document_app](https://github.com/pvhung2112/cloud_study_document_app)
+- **Slide thuyết trình (Canva):** [https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0](https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0)
 
 ---
 
@@ -225,9 +226,11 @@ class FirebaseCloudStorageService {
 
 ## 7. Checklist 7: Bộ Slide tìm hiểu Firebase và Quy trình Setup tài khoản nhóm
 
-Chi tiết nội dung 12 trang Slide trình chiếu và hướng dẫn các bước thiết lập cho tài khoản nhóm sinh viên đã được xây dựng tại tệp đính kèm:
-👉 [SLIDE_THUYET_TRINH_FIREBASE.html](./SLIDE_THUYET_TRINH_FIREBASE.html) (Slide tương tác trên trình duyệt)  
-👉 [SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md](./SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md) (Đề cương slide chi tiết)
+Chi tiết nội dung slide trình chiếu của nhóm và hướng dẫn các bước thiết lập cho tài khoản nhóm sinh viên:
+
+👉 **Slide thuyết trình (Canva chính thức của nhóm):** [https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0](https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0)  
+👉 **Slide thuyết trình tương tác HTML (Mở trực tiếp trên trình duyệt):** [SLIDE_THUYET_TRINH_FIREBASE.html](./SLIDE_THUYET_TRINH_FIREBASE.html)  
+👉 **Đề cương nội dung slide chi tiết:** [SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md](./SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md)
 
 ### Tóm tắt 5 bước thực hành thiết lập cho nhóm sinh viên:
 1. **Bước 1:** Trưởng nhóm vào [Firebase Console](https://console.firebase.google.com/) bằng tài khoản Gmail của nhóm (`phamvanhung21122004@gmail.com`), chọn **"Add project"** và đặt tên dự án `study-document-cloud`.
