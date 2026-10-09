@@ -1,3 +1,4 @@
+import 'struct/studySyncClient.dart';
 import 'package:flutter/material.dart';
 import 'widgets/navigationSidebar.dart';
 import 'pages/homePage.dart';
@@ -42,6 +43,12 @@ class MainLayoutScreen extends StatefulWidget {
 
 class _MainLayoutScreenState extends State<MainLayoutScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    StudySyncClient().pullFromCloud();
+  }
 
   void _onNavigate(int index) {
     setState(() => _currentIndex = index);

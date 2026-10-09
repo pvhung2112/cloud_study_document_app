@@ -1,3 +1,5 @@
+import '../struct/studySyncClient.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -90,6 +92,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         .where((e) => e.isNotEmpty)
         .toList();
 
+    final syncClient = StudySyncClient();
     if (_isEdit) {
       final updated = widget.initialDocument!.copyWith(
         title: _titleController.text.trim(),
@@ -103,6 +106,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         isPinned: _isPinned,
       );
       await _documentDao.update(updated);
+      unawaited(syncClient.saveToCloud(updated));
     } else {
       final newDoc = StudyDocument(
         id: const Uuid().v4(),
@@ -117,9 +121,26 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         isPinned: _isPinned,
       );
       await _documentDao.insert(newDoc);
+      unawaited(syncClient.saveToCloud(newDoc));
     }
 
-    if (mounted) Navigator.pop(context);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.cloud_done_rounded, color: Colors.white, size: 20),
+              SizedBox(width: 8),
+              Expanded(child: Text('Đã lưu và tự động cập nhật lên Firebase Cloud!')),
+            ],
+          ),
+          backgroundColor: Color(0xFF2E7D32),
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 
   @override

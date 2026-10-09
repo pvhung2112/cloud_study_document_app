@@ -21,7 +21,58 @@ class StudySyncClient {
     return unsynced.length;
   }
 
-  /// Kéo dữ liệu từ Cloud Firestore về Local Database (dành cho máy mới hoặc khi CSDL trên máy bị trống)
+  /// Tự động lưu 1 bản ghi trực tiếp lên Google Cloud Firestore REST API khi người dùng Thêm / Sửa
+  Future<bool> saveToCloud(StudyDocument doc) async {
+    try {
+      final url = Uri.parse(
+        'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents/${doc.id}?key=$apiKey',
+      );
+
+      final body = jsonEncode({
+        'fields': {
+          'documentId': {'stringValue': doc.id},
+          'title': {'stringValue': doc.title},
+          'courseId': {'stringValue': doc.courseId},
+          'type': {'stringValue': doc.type.name},
+          'status': {'stringValue': doc.status.name},
+          'description': {'stringValue': doc.description},
+          'fileUrl': {'stringValue': doc.fileUrl},
+          'tags': {'stringValue': doc.tags.join(',')},
+          'uploadedBy': {'stringValue': 'phamvanhung21122004@gmail.com'},
+          'syncedAt': {'stringValue': DateTime.now().toIso8601String()},
+        }
+      });
+
+      final response = await http.patch(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await _documentDao.markAsSynced([doc.id]);
+        return true;
+      }
+    } catch (_) {
+      // Khi mất kết nối mạng, dữ liệu vẫn được lưu an toàn trong CSDL cục bộ (Local-First)
+    }
+    return false;
+  }
+
+  /// Tự động xóa 1 bản ghi trên Google Cloud Firestore khi người dùng Xóa trên ứng dụng
+  Future<bool> deleteFromCloud(String docId) async {
+    try {
+      final url = Uri.parse(
+        'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents/$docId?key=$apiKey',
+      );
+      final response = await http.delete(url);
+      return response.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Kéo toàn bộ dữ liệu thực tế từ Cloud Firestore về hiển thị trên ứng dụng (Web/App)
   Future<int> pullFromCloud({
     Future<List<StudyDocument>> Function()? downloadMock,
   }) async {
@@ -59,6 +110,9 @@ class StudySyncClient {
           final typeStr = fields['type']?['stringValue'];
           final statusStr = fields['status']?['stringValue'];
           final description = fields['description']?['stringValue'] ?? '';
+          final fileUrl = fields['fileUrl']?['stringValue'] ?? '';
+          final tagsStr = fields['tags']?['stringValue'] ?? '';
+          final tags = tagsStr.isNotEmpty ? tagsStr.split(',').map((t) => t.trim()).toList() : <String>[];
 
           final existing = _documentDao.getById(docId);
           if (existing == null) {
@@ -69,6 +123,8 @@ class StudySyncClient {
               type: DocumentTypeExtension.fromString(typeStr),
               status: DocumentStatusExtension.fromString(statusStr),
               description: description,
+              fileUrl: fileUrl,
+              tags: tags,
               isSynced: true,
             );
             await _documentDao.saveFromCloud(newDoc);
@@ -117,7 +173,6 @@ class StudySyncClient {
       }
 
       int successCount = 0;
-      bool hasPermissionError = false;
 
       if (uploadMock != null) {
         final mockOk = await uploadMock(docsToSync);
@@ -125,38 +180,9 @@ class StudySyncClient {
       } else {
         // Gửi trực tiếp lên Google Cloud Firestore REST API
         for (final doc in docsToSync) {
-          // Sử dụng PATCH kèm doc.id để cập nhật đúng bản ghi (Upsert) tránh trùng lặp
-          final url = Uri.parse(
-            'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents/${doc.id}?key=$apiKey',
-          );
-
-          final body = jsonEncode({
-            'fields': {
-              'documentId': {'stringValue': doc.id},
-              'title': {'stringValue': doc.title},
-              'courseId': {'stringValue': doc.courseId},
-              'type': {'stringValue': doc.type.name},
-              'status': {'stringValue': doc.status.name},
-              'description': {'stringValue': doc.description},
-              'uploadedBy': {'stringValue': 'phamvanhung21122004@gmail.com'},
-              'syncedAt': {'stringValue': DateTime.now().toIso8601String()},
-            }
-          });
-
-          try {
-            final response = await http.patch(
-              url,
-              headers: {'Content-Type': 'application/json'},
-              body: body,
-            );
-
-            if (response.statusCode == 200 || response.statusCode == 201) {
-              successCount++;
-            } else if (response.statusCode == 403) {
-              hasPermissionError = true;
-            }
-          } catch (_) {
-            // Lỗi mạng cục bộ
+          final ok = await saveToCloud(doc);
+          if (ok) {
+            successCount++;
           }
         }
       }
@@ -166,18 +192,11 @@ class StudySyncClient {
         await _documentDao.markAsSynced(syncedIds);
         _isSyncing = false;
         final totalCount = successCount + pulledCount;
-        final pullText = pulledCount > 0 ? ' (đã kéo $pulledCount bản ghi từ Cloud)' : '';
+        final pullText = pulledCount > 0 ? ' (đã tải $pulledCount bản ghi từ Cloud)' : '';
         return SyncResult(
           success: true,
           syncedCount: totalCount,
-          message: 'Đồng bộ 2 chiều thành công: Đã lưu $successCount tài liệu lên Cloud Firestore$pullText!',
-        );
-      } else if (hasPermissionError) {
-        _isSyncing = false;
-        return SyncResult(
-          success: true,
-          syncedCount: docsToSync.length,
-          message: 'Đã kết nối Firestore! (Vào tab Rules trên Firebase đổi if false thành if true để mở khóa)',
+          message: 'Đồng bộ thành công: Đã lưu $successCount tài liệu lên Cloud Firestore$pullText!',
         );
       } else {
         _isSyncing = false;
