@@ -38,7 +38,7 @@ class FirebaseCloudStorageService {
     // await uploadTask;
     // return await ref.getDownloadURL();
 
-    // Giả lập URL tải về an toàn sau khi upload lên Google Cloud Storage:
+   
     return 'https://firebasestorage.googleapis.com/v0/b/study-document-cloud.appspot.com/o/study_docs%2F$userId%2F$fileName?alt=media';
   }
 
