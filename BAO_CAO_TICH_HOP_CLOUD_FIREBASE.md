@@ -84,12 +84,78 @@ Nhóm đề xuất mô hình **Hybrid Cloud** kết hợp giữa:
 
 ## 4. Checklist 4: Thiết kế sơ đồ kiến trúc tích hợp Cloud và mô tả luồng dữ liệu
 
-### 4.1. Sơ đồ Kiến trúc Hệ thống Hybrid Cloud
+### 4.1. Sơ đồ Kiến trúc Hệ thống Hybrid Cloud (Hình ảnh & Bản vẽ Kiến trúc)
+
+Hệ thống được thiết kế theo mô hình Hybrid Cloud kết hợp lưu trữ cục bộ Local-First và dịch vụ đám mây Google Firebase:
+
+#### 🖼️ Hình ảnh Sơ đồ Kiến trúc Chi tiết (High-Resolution Diagram):
 Sơ đồ kiến trúc chi tiết đã được xuất ra định dạng hình ảnh độ phân giải cao tại tệp: `cloud_architecture_diagram.jpg`
 
 ![Sơ đồ Kiến trúc Hybrid Cloud](cloud_architecture_diagram.jpg)
 
-### 4.2. Mô tả Luồng dữ liệu (Data Flow) giữa Ứng dụng và Đám mây
+#### 📐 Bản vẽ Sơ đồ Kiến trúc Hệ thống (Mermaid Architecture Diagram):
+```mermaid
+graph TB
+    classDef clientClass fill:#d0e1fd,stroke:#4a86e8,stroke-width:2px,color:#000;
+    classDef authClass fill:#ffe599,stroke:#d6b656,stroke-width:2px,color:#000;
+    classDef dbClass fill:#d9ead3,stroke:#6aa84f,stroke-width:2px,color:#000;
+    classDef storageClass fill:#fce5cd,stroke:#e69138,stroke-width:2px,color:#000;
+    classDef cdnClass fill:#e1d5e7,stroke:#9673a6,stroke-width:2px,color:#000;
+
+    subgraph ClientDevice [" 📱 THIẾT BỊ NGƯỜI DÙNG (LOCAL-FIRST CLIENT) "]
+        UI["Flutter Presentation Layer<br/>(Tabs Bài giảng, Bài tập, Lọc Môn học)"]:::clientClass
+        LocalStore[("Local SQLite / In-Memory Store<br/>(Nguồn sự thật tại máy khách)")]:::clientClass
+        SyncClient["Local-First Sync Engine<br/>(Hàng đợi đồng bộ nền & Giải quyết xung đột)"]:::clientClass
+    end
+
+    subgraph FirebaseCloud [" ☁️ GOOGLE FIREBASE CLOUD ECOSYSTEM "]
+        Auth["Firebase Authentication<br/>(Google Sign-In OAuth 2.0 / JWT Token)"]:::authClass
+        Firestore[("Cloud Firestore NoSQL<br/>(Tài liệu, Môn học, Trạng thái, Metadata)")]:::dbClass
+        Storage["Firebase Cloud Storage<br/>(Chứa File PDF Slide, DOCX, ZIP Bài tập)"]:::storageClass
+        CDN["Google Global Cloud CDN<br/>(Bộ nhớ đệm phân phối file tốc độ cao)"]:::cdnClass
+    end
+
+    UI -->|"1. Thao tác ghi/sửa tức thì"| LocalStore
+    LocalStore -->|"2. Lắng nghe thay đổi"| SyncClient
+    SyncClient -->|"3. Gửi Token xác thực"| Auth
+    Auth -->|"4. Cấp quyền truy cập (UID/Claims)"| SyncClient
+    SyncClient -->|"5. Đồng bộ Metadata JSON hai chiều"| Firestore
+    UI -->|"6. Tải tệp tài liệu lên trực tiếp"| Storage
+    Storage -->|"7. Phân phối tệp qua CDN"| CDN
+    CDN -->|"8. Tải tệp xuống nhanh chóng"| UI
+```
+
+---
+
+### 4.2. Sơ đồ Luồng Dữ liệu Tuần tự (DFD / Sequence Data Flow Diagram)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor SinhVien as 👤 Sinh viên
+    participant FlutterApp as 📱 Flutter App (Local-First)
+    participant FirebaseAuth as 🔐 Firebase Auth (Google)
+    participant CloudStorage as 📦 Firebase Storage (Files)
+    participant Firestore as 📄 Cloud Firestore (Metadata)
+
+    SinhVien->>FlutterApp: Bấm "Đăng nhập với Google"
+    FlutterApp->>FirebaseAuth: Yêu cầu xác thực tài khoản Google
+    FirebaseAuth-->>FlutterApp: Trả về UserCredential & Auth Token (JWT)
+
+    SinhVien->>FlutterApp: Thêm bài giảng & Đính kèm file Slide.pdf
+    FlutterApp->>FlutterApp: Lưu Metadata vào Local DB (Phản hồi tức thì 0ms)
+    
+    rect rgb(240, 248, 255)
+        Note over FlutterApp,CloudStorage: Tiến trình đồng bộ nền (Background Sync Queue)
+        FlutterApp->>CloudStorage: Tải file Slide.pdf lên bucket (/study_docs/{uid}/)
+        CloudStorage-->>FlutterApp: Trả về Download URL của file
+        FlutterApp->>Firestore: Ghi Metadata tài liệu kèm fileUrl lên Firestore
+        Firestore-->>FlutterApp: Xác nhận đồng bộ thành công
+        FlutterApp->>FlutterApp: Cập nhật cờ isSynced = true tại Local DB
+    end
+```
+
+### 4.3. Mô tả Chi tiết Luồng dữ liệu (Data Flow) giữa Ứng dụng và Đám mây
 1. **Luồng Thao tác Cục bộ (Local Write Flow):**
    - Khi sinh viên tạo mới một bài giảng/bài tập và đính kèm tệp tin PDF, ứng dụng lưu bản ghi vào CSDL cục bộ với cờ `isSynced = false`.
    - UI cập nhật ngay tức thì (0ms latency), không chờ phản hồi mạng.

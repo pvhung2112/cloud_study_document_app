@@ -38,6 +38,40 @@
 
 ![Sơ đồ kiến trúc Cloud Firebase](cloud_architecture_diagram.jpg)
 
+### 📐 Bản Vẽ Kiến Trúc Hệ Thống (Mermaid Architecture Diagram)
+
+```mermaid
+graph TB
+    classDef clientClass fill:#d0e1fd,stroke:#4a86e8,stroke-width:2px,color:#000;
+    classDef authClass fill:#ffe599,stroke:#d6b656,stroke-width:2px,color:#000;
+    classDef dbClass fill:#d9ead3,stroke:#6aa84f,stroke-width:2px,color:#000;
+    classDef storageClass fill:#fce5cd,stroke:#e69138,stroke-width:2px,color:#000;
+    classDef cdnClass fill:#e1d5e7,stroke:#9673a6,stroke-width:2px,color:#000;
+
+    subgraph ClientDevice [" 📱 THIẾT BỊ NGƯỜI DÙNG (LOCAL-FIRST CLIENT) "]
+        UI["Flutter Presentation Layer<br/>(Tabs Bài giảng, Bài tập, Lọc Môn học)"]:::clientClass
+        LocalStore[("Local SQLite / In-Memory Store<br/>(Nguồn sự thật tại máy khách)")]:::clientClass
+        SyncClient["Local-First Sync Engine<br/>(Hàng đợi đồng bộ nền & Giải quyết xung đột)"]:::clientClass
+    end
+
+    subgraph FirebaseCloud [" ☁️ GOOGLE FIREBASE CLOUD ECOSYSTEM "]
+        Auth["Firebase Authentication<br/>(Google Sign-In OAuth 2.0 / JWT Token)"]:::authClass
+        Firestore[("Cloud Firestore NoSQL<br/>(Tài liệu, Môn học, Trạng thái, Metadata)")]:::dbClass
+        Storage["Firebase Cloud Storage<br/>(Chứa File PDF Slide, DOCX, ZIP Bài tập)"]:::storageClass
+        CDN["Google Global Cloud CDN<br/>(Bộ nhớ đệm phân phối file tốc độ cao)"]:::cdnClass
+    end
+
+    UI -->|"1. Thao tác ghi/sửa tức thì"| LocalStore
+    LocalStore -->|"2. Lắng nghe thay đổi"| SyncClient
+    SyncClient -->|"3. Gửi Token xác thực"| Auth
+    Auth -->|"4. Cấp quyền truy cập (UID/Claims)"| SyncClient
+    SyncClient -->|"5. Đồng bộ Metadata JSON hai chiều"| Firestore
+    UI -->|"6. Tải tệp tài liệu lên trực tiếp"| Storage
+    Storage -->|"7. Phân phối tệp qua CDN"| CDN
+    CDN -->|"8. Tải tệp xuống nhanh chóng"| UI
+```
+
+
 ### Phân Tách 4 Tầng Kiến Trúc Chuẩn Cashew:
 
 ```
