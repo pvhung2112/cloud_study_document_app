@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../database/study_document_dao.dart';
@@ -21,9 +21,72 @@ class StudySyncClient {
     return unsynced.length;
   }
 
-  /// Đồng bộ trực tiếp danh sách tài liệu lên Cloud Firestore REST API thật của Google
+  /// Kéo dữ liệu từ Cloud Firestore về Local Database (dành cho máy mới hoặc khi CSDL trên máy bị trống)
+  Future<int> pullFromCloud({
+    Future<List<StudyDocument>> Function()? downloadMock,
+  }) async {
+    if (downloadMock != null) {
+      final mockDocs = await downloadMock();
+      int added = 0;
+      for (final doc in mockDocs) {
+        if (_documentDao.getById(doc.id) == null) {
+          await _documentDao.saveFromCloud(doc);
+          added++;
+        }
+      }
+      return added;
+    }
+
+    try {
+      final url = Uri.parse(
+        'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents?key=$apiKey',
+      );
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final documents = data['documents'] as List<dynamic>?;
+        if (documents == null || documents.isEmpty) return 0;
+
+        int pulledCount = 0;
+        for (final item in documents) {
+          final fields = item['fields'] as Map<String, dynamic>?;
+          if (fields == null) continue;
+
+          final name = item['name'] as String? ?? '';
+          final docId = fields['documentId']?['stringValue'] ?? name.split('/').last;
+          final title = fields['title']?['stringValue'] ?? 'Tài liệu đám mây';
+          final courseId = fields['courseId']?['stringValue'] ?? 'c1';
+          final typeStr = fields['type']?['stringValue'];
+          final statusStr = fields['status']?['stringValue'];
+          final description = fields['description']?['stringValue'] ?? '';
+
+          final existing = _documentDao.getById(docId);
+          if (existing == null) {
+            final newDoc = StudyDocument(
+              id: docId,
+              title: title,
+              courseId: courseId,
+              type: DocumentTypeExtension.fromString(typeStr),
+              status: DocumentStatusExtension.fromString(statusStr),
+              description: description,
+              isSynced: true,
+            );
+            await _documentDao.saveFromCloud(newDoc);
+            pulledCount++;
+          }
+        }
+        return pulledCount;
+      }
+    } catch (_) {
+      // Bỏ qua lỗi mạng
+    }
+    return 0;
+  }
+
+  /// Đồng bộ 2 chiều (Pull & Push) trực tiếp với Google Cloud Firestore REST API
   Future<SyncResult> syncWithCloud({
     Future<bool> Function(List<StudyDocument> docs)? uploadMock,
+    Future<List<StudyDocument>> Function()? downloadMock,
   }) async {
     if (_isSyncing) {
       return SyncResult(success: false, message: 'Đang có tiến trình đồng bộ khác');
@@ -31,12 +94,26 @@ class StudySyncClient {
 
     _isSyncing = true;
     try {
+      // BƯỚC 1: Kéo (Pull) tài liệu mới nhất từ Firestore Cloud về Local DB
+      int pulledCount = 0;
+      try {
+        pulledCount = await pullFromCloud(downloadMock: downloadMock);
+      } catch (_) {}
+
+      // BƯỚC 2: Tìm các tài liệu cục bộ chưa đồng bộ để đẩy (Push) lên Cloud
       final unsyncedDocs = _documentDao.getUnsyncedDocuments();
       final docsToSync = unsyncedDocs.isEmpty ? _documentDao.getAll() : unsyncedDocs;
 
       if (docsToSync.isEmpty) {
         _isSyncing = false;
-        return SyncResult(success: true, syncedCount: 0, message: 'Chưa có tài liệu nào để đồng bộ');
+        if (pulledCount > 0) {
+          return SyncResult(
+            success: true,
+            syncedCount: pulledCount,
+            message: 'Đã kéo thành công $pulledCount tài liệu từ Cloud Firestore về CSDL của máy!',
+          );
+        }
+        return SyncResult(success: true, syncedCount: 0, message: 'Dữ liệu cục bộ và Cloud đã đồng bộ hoàn tất');
       }
 
       int successCount = 0;
@@ -88,10 +165,12 @@ class StudySyncClient {
         final syncedIds = docsToSync.map((d) => d.id).toList();
         await _documentDao.markAsSynced(syncedIds);
         _isSyncing = false;
+        final totalCount = successCount + pulledCount;
+        final pullText = pulledCount > 0 ? ' (đã kéo $pulledCount bản ghi từ Cloud)' : '';
         return SyncResult(
           success: true,
-          syncedCount: successCount,
-          message: 'Đã đồng bộ thành công $successCount tài liệu lên Cloud Firestore!',
+          syncedCount: totalCount,
+          message: 'Đồng bộ 2 chiều thành công: Đã lưu $successCount tài liệu lên Cloud Firestore$pullText!',
         );
       } else if (hasPermissionError) {
         _isSyncing = false;

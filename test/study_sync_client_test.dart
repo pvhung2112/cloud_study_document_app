@@ -47,5 +47,26 @@ void main() {
       final syncedDoc = documentDao.getById('sync-test-2');
       expect(syncedDoc!.isSynced, isTrue);
     });
+    test('3. Kiểm thử cơ chế Pull từ Cloud về máy khi CSDL cục bộ bị trống', () async {
+      final cloudDocs = [
+        StudyDocument(
+          id: 'cloud-pull-1',
+          title: 'Tài liệu kéo từ Firestore',
+          courseId: 'c1',
+          type: DocumentType.reference,
+          isSynced: true,
+        ),
+      ];
+
+      final pulledCount = await syncClient.pullFromCloud(
+        downloadMock: () async => cloudDocs,
+      );
+
+      expect(pulledCount, equals(1));
+      final pulledDoc = documentDao.getById('cloud-pull-1');
+      expect(pulledDoc, isNotNull);
+      expect(pulledDoc!.title, equals('Tài liệu kéo từ Firestore'));
+      expect(pulledDoc.isSynced, isTrue);
+    });
   });
 }
