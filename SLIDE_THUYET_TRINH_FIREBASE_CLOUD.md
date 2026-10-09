@@ -1,28 +1,39 @@
 # 📊 BỘ SLIDE THUYẾT TRÌNH: TÌM HIỂU VỀ FIREBASE & PHƯƠNG ÁN TÍCH HỢP CLOUD
-## Dành cho nhóm sinh viên thuyết trình Bài tập Lớn / Báo cáo TH1
+## Dành cho nhóm sinh viên thuyết trình Bài tập Lớn / Báo cáo Chuyên đề
 
-- **Chủ đề:** Tích hợp Điện toán Đám mây (Firebase Cloud) cho Hệ thống Quản lý Tài liệu Học tập
-- **Sinh viên thực hiện:** Phạm Văn Hưng và Nhóm
-- **Công nghệ chính:** Flutter • Firebase Authentication • Cloud Firestore • Firebase Cloud Storage
+- **Chủ đề:** Tích hợp Điện toán Đám mây (Google Firebase) cho Hệ thống Quản lý Tài liệu Học tập
+- **Ứng dụng triển khai:** `study_document_app` (Kiến trúc Cashew Local-First)
+- **Kho lưu trữ GitHub:** [https://github.com/pvhung2112/cloud_study_document_app](https://github.com/pvhung2112/cloud_study_document_app)
+- **Công nghệ chính:** Flutter • Firebase Authentication (Google Sign-In) • Cloud Firestore • Firebase Cloud Storage
 - **Định dạng:** 12 Trang Slide hoàn chỉnh (Nội dung trình chiếu + Gợi ý hình ảnh + Lời thoại thuyết trình)
 
 ---
 
-## 📑 MỤC LỤC BỘ SLIDE
-- **Slide 1:** Trang Tiêu đề & Giới thiệu Nhóm
-- **Slide 2:** Đặt vấn đề & Hạn chế của Hệ thống Lưu trữ Truyền thống
-- **Slide 3:** Giới thiệu Nền tảng Google Firebase
-- **Slide 4:** Các Dịch vụ Cốt lõi của Firebase được lựa chọn
-- **Slide 5:** So sánh Mô hình Truyền thống (Local) vs Mô hình Tích hợp Cloud
-- **Slide 6:** Sơ đồ Kiến trúc Hệ thống Hybrid Cloud (Local-First + Firebase)
-- **Slide 7:** Luồng Dữ liệu Xác thực & Đồng bộ Tệp tin (Data Flow)
-- **Slide 8:** Tích hợp Xác thực Google (Google Sign-In) trên Flutter
-- **Slide 9:** Tích hợp Lưu trữ Tệp Tài liệu (Firebase Cloud Storage)
-- **Slide 10:** Đánh giá Tác động: Bảo mật, Chi phí và Hiệu suất
-- **Slide 11:** Quy trình 5 bước Setup Firebase với Tài khoản của Nhóm
-- **Slide 12:** Tổng kết, Demo & Hỏi đáp (Q&A)
+## 👥 DANH SÁCH NHÓM SINH VIÊN THỰC HIỆN
+
+| STT | Họ và Tên | Mã Sinh Viên | Vai Trò | Nhiệm Vụ Phụ Trách |
+| :---: | :--- | :---: | :--- | :--- |
+| **1** | **Phạm Văn Hưng** | `2351170598` | **Trưởng nhóm / Core Architect** | Cấu hình dự án Flutter, hoạch định kiến trúc Local-First, tích hợp Google Firebase REST API, điều phối luồng đồng bộ dữ liệu & kiểm soát mã nguồn. |
+| **2** | **Trịnh Trung Kiên** | `2251172396` | **Thành viên / Frontend Developer** | Thiết kế giao diện UI/UX theo ngôn ngữ Cashew Design, xây dựng màn hình Kho tài liệu học tập (3 Tabs: Bài giảng, Bài tập, Tham khảo) & Danh mục môn học. |
+| **3** | **Đỗ Việt Tiến** | `2251243452` | **Thành viên / Frontend Developer** | Thiết kế giao diện Tìm kiếm thời gian thực, Bộ lọc phân loại đa tiêu chí (theo môn, tags, độ ưu tiên) & Hộp thoại Cloud Firebase Sync Modal. |
+| **4** | **Cao Đức Đạo** | `2351170581` | **Thành viên / Backend & Database** | Quản lý cơ sở dữ liệu Local-First (DAO Layer, Reactive Streams), thiết lập cấu trúc Cloud Firestore & kiểm soát bảo mật Firebase Security Rules. |
+| **5** | **Trương Tuấn Hải** | `2351170590` | **Thành viên / Cloud Research & Documentation** | Nghiên cứu nền tảng Google Firebase (Auth & Storage), xây dựng Slide thuyết trình nhóm, viết tài liệu hướng dẫn Setup & biên soạn Báo cáo Kỹ thuật. |
 
 ---
+
+## 📑 MỤC LỤC BỘ SLIDE
+- **Slide 1:** Trang Tiêu đề & Danh sách Nhóm thực hiện
+- **Slide 2:** 4 Thành phần Cốt lõi của Hệ thống Quản lý Tài liệu
+- **Slide 3:** Các Điểm nghẽn của Hạ tầng Truyền thống (Local / On-Premise)
+- **Slide 4:** Lựa chọn Mô hình Cloud & So sánh Giải pháp (AWS vs Azure vs Firebase)
+- **Slide 5:** Sơ đồ Kiến trúc Hệ thống Hybrid Cloud (Local-First + Firebase)
+- **Slide 6:** Mô tả Luồng Dữ liệu Đồng bộ 2 Chiều (Data Flow)
+- **Slide 7:** Đánh giá Tác động: Bảo mật, Chi phí và Hiệu suất
+- **Slide 8:** Tìm hiểu về Nền tảng Google Firebase (Hệ sinh thái BaaS)
+- **Slide 9:** Quy trình Setup Firebase cho Flutter theo chuẩn Google (`flutterfire`)
+- **Slide 10:** Cấu hình Dự án với Tài khoản Nhóm thực tế (`study-document-cloud`)
+- **Slide 11:** Mã nguồn Tích hợp Đăng nhập Google & Tải tệp lên Storage
+- **Slide 12:** Tổng kết, Demo & Hỏi đáp (Q&A)
 
 ---
 
@@ -30,194 +41,144 @@
 - **Tiêu đề lớn:** PHƯƠNG ÁN TÍCH HỢP CLOUD CHO HỆ THỐNG QUẢN LÝ TÀI LIỆU HỌC TẬP
 - **Tiêu đề phụ:** Ứng dụng Nền tảng Google Firebase & Kiến trúc Hybrid Local-First
 - **Thông tin nhóm:**
-  - Nhóm thực hiện: Nhóm Sinh viên KTPM
-  - Thành viên: Phạm Văn Hưng (Nhóm trưởng) & các thành viên
-  - Giảng viên hướng dẫn: ...
-  - Năm học: 2026 - 2027
+  - Nhóm sinh viên thực hiện: Phạm Văn Hưng, Trịnh Trung Kiên, Đỗ Việt Tiến, Cao Đức Đạo, Trương Tuấn Hải
+  - Dự án GitHub: `pvhung2112/cloud_study_document_app`
 - **Gợi ý hình ảnh:** Logo Flutter kết hợp logo Firebase Cloud, hình minh họa tài liệu học tập và đám mây kết nối.
 - 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
   > *"Kính chào Thầy/Cô và các bạn. Hôm nay nhóm em xin trình bày phương án chuyển đổi và tích hợp điện toán đám mây cho ứng dụng Quản lý Tài liệu Học tập. Mục tiêu là giúp sinh viên truy cập bài giảng, nộp bài tập và đồng bộ dữ liệu mọi lúc mọi nơi một cách an toàn và bảo mật."*
 
 ---
 
-### 🖥️ SLIDE 2: ĐẶT VẤN ĐỀ & HẠN CHẾ CỦA HẠ TẦNG TRUYỀN THỐNG
-- **Tiêu đề:** Tại sao phải chuyển đổi lên Cloud? (Các điểm nghẽn của On-Premise / Local)
+### 🖥️ SLIDE 2: 4 THÀNH PHẦN CỐT LÕI CỦA ỨNG DỤNG QUẢN LÝ TÀI LIỆU
 - **Nội dung chính:**
-  1. ❌ **Không đồng bộ đa thiết bị:** Dữ liệu lưu trên Laptop không tự chuyển sang Điện thoại thông minh.
-  2. ❌ **Rủi ro mất dữ liệu hoàn toàn:** Thiết bị hỏng ổ cứng hoặc mất máy đồng nghĩa với mất toàn bộ tài liệu học tập.
-  3. ❌ **Không thể chia sẻ tài liệu:** Khó khăn khi làm việc nhóm hoặc trao đổi tài liệu học phần trực tuyến.
-  4. ❌ **Giới hạn bộ nhớ máy:** Các file PDF/Slide chất lượng cao làm tràn bộ nhớ điện thoại (32GB - 64GB).
-  5. ❌ **Gánh nặng vận hành máy chủ riêng:** Chi phí duy trì server vật lý, IP tĩnh và rủi ro sập nguồn điện.
-- **Gợi ý hình ảnh:** Biểu tượng ổ cứng bị lỗi, hình minh họa 2 thiết bị không đồng bộ được dữ liệu.
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Trong mô hình cục bộ truyền thống, sinh viên gặp 5 trở ngại lớn: không đồng bộ được giữa máy tính và điện thoại, nguy cơ mất trắng dữ liệu khi hỏng máy, không thể chia sẻ bài giảng cho bạn cùng lớp, và bộ nhớ máy nhanh chóng bị đầy. Đây chính là lý do chúng em cần giải pháp Cloud."*
+  1. **Frontend:** Giao diện Flutter đa nền tảng, thiết kế bo góc mềm mại theo ngôn ngữ Cashew, kho tài liệu 3 tabs và thanh điều hướng sidebar.
+  2. **Backend:** Tầng xử lý logic nghiệp vụ cục bộ tại máy khách, phân loại tài liệu, quản lý cờ đồng bộ `isSynced` và kết nối REST API.
+  3. **Database:** CSDL có cấu trúc quản lý metadata tài liệu (tiêu đề, môn học, deadline, tags) với cơ chế Reactive Streams phản hồi tức thì.
+  4. **File Storage:** Lưu trữ các tệp tin bài giảng PDF, slide bài tập DOCX/ZIP dung lượng lớn, liên kết với đám mây.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Hệ thống quản lý tài liệu được phân tách rõ ràng thành 4 khối chức năng: Giao diện người dùng mượt mà, Logic nghiệp vụ client-side, CSDL cấu trúc quản lý metadata và Kho lưu trữ chuyên biệt cho các tệp bài giảng nặng."*
 
 ---
 
-### 🖥️ SLIDE 3: GIỚI THIỆU NỀN TẢNG GOOGLE FIREBASE
-- **Tiêu đề:** Tổng quan về Google Firebase (BaaS - Backend-as-a-Service)
-- **Nội dung chính:**
-  - **Firebase là gì?** Nền tảng phát triển ứng dụng di động và web toàn diện do Google vận hành.
-  - **Mô hình Backend-as-a-Service (BaaS):** Toàn bộ máy chủ, chứng chỉ SSL, cơ sở dữ liệu và hạ tầng mạng đều do Google tự động quản lý và mở rộng (Auto-scaling).
-  - **Hệ sinh thái phong phú:** Cung cấp sẵn Xác thực (Auth), Cơ sở dữ liệu (Firestore), Lưu trữ tệp (Storage), Phân tích (Analytics) và Cloud Functions.
-  - **Hỗ trợ tối đa cho Flutter:** Bộ thư viện chính thức **FlutterFire** do chính Google phát triển và tối ưu.
-- **Gợi ý hình ảnh:** Bản đồ các dịch vụ của Firebase xoay quanh ứng dụng Flutter.
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Để giải quyết bài toán trên, nhóm em lựa chọn Google Firebase - một nền tảng BaaS hàng đầu. Với Firebase, lập trình viên không cần tự dựng backend phức tạp mà có thể tận dụng toàn bộ hạ tầng đám mây toàn cầu của Google với độ ổn định 99.95%."*
+### 🖥️ SLIDE 3: ĐIỂM NGHẼN CỦA HẠ TẦNG TRUYỀN THỐNG
+- **Hạn chế của mô hình Offline cục bộ:**
+  - Mất mát dữ liệu hoàn toàn nếu hỏng máy hoặc nhiễm virus (SPOF).
+  - Không thể đồng bộ qua lại giữa laptop và điện thoại khi đi học.
+  - Nguy cơ tràn bộ nhớ điện thoại do lưu nhiều file slide nặng.
+- **Rào cản nếu tự dựng Server riêng:**
+  - Chi phí phần cứng, tiền điện, IP tĩnh quá đắt đỏ cho sinh viên.
+  - Sập server vào mùa cao điểm thi cử do nghẽn băng thông.
+  - Khó kiểm soát an ninh mạng và vá lỗ hổng bảo mật.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Nếu chỉ lưu trữ cục bộ, sinh viên đối mặt với nguy cơ mất trắng tài liệu khi hỏng máy. Còn nếu tự dựng máy chủ riêng thì chi phí và công tác vận hành là bất khả thi. Vì vậy, chuyển dịch lên Đám mây là giải pháp tất yếu."*
 
 ---
 
-### 🖥️ SLIDE 4: CÁC DỊCH VỤ CỐT LÕI CỦA FIREBASE ĐƯỢC LỰA CHỌN
-- **Tiêu đề:** 3 Dịch vụ Firebase Cốt lõi cho Hệ thống Quản lý Tài liệu
-- **Nội dung chính:**
-  1. 🔐 **Firebase Authentication:**
-     - Đăng nhập bảo mật 1-chạm bằng **Tài khoản Google (Google Sign-In)**.
-     - Quản lý phiên đăng nhập và định danh người dùng duy nhất (`UID`).
-  2. 📄 **Cloud Firestore (NoSQL Database):**
-     - Lưu trữ metadata: Tên bài giảng, hạn nộp bài tập, mã môn học, trạng thái học tập.
-     - Cơ chế Real-time Streams tự động cập nhật dữ liệu đa thiết bị tức thì.
-  3. 📦 **Firebase Cloud Storage:**
-     - Lưu trữ tệp tin nhị phân lớn: File Slide PDF, Word (.docx), bài tập nén (.zip).
-     - Tích hợp mạng phân phối nội dung toàn cầu (Google Cloud CDN) giúp tải tệp siêu tốc.
-- **Gợi ý hình ảnh:** 3 icon dịch vụ: Firebase Auth, Firestore và Cloud Storage.
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Nhóm em tập trung khai thác 3 dịch vụ trụ cột: Firebase Auth để đăng nhập tiện lợi qua Google, Cloud Firestore để lưu thông tin tài liệu theo thời gian thực, và Cloud Storage để lưu trữ các tệp bài giảng và bài tập dung lượng lớn."*
+### 🖥️ SLIDE 4: LỰA CHỌN MÔ HÌNH CLOUD & SO SÁNH GIẢI PHÁP
+- **Mô hình triển khai:** **Hybrid Cloud** (Kết hợp ưu điểm phản hồi tức thì của Local-First và tính sẵn sàng của Public Cloud).
+- **So sánh 3 nền tảng:**
+  - AWS (S3 + Cognito): Mạnh mẽ nhưng SDK cho Flutter cồng kềnh, cấu hình phức tạp.
+  - Azure (Blob Storage): Phù hợp doanh nghiệp Microsoft, ít tối ưu cho mobile/Flutter.
+  - **Google Firebase:** Hỗ trợ Flutter số 1 thế giới (FlutterFire), tích hợp sẵn Google Sign-In, miễn phí trọn đời gói Spark Plan (1GB DB, 5GB File Storage).
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Nhóm đã phân tích và lựa chọn Google Firebase vì tính tích hợp sâu nhất với Flutter, hỗ trợ đăng nhập Google sẵn có và gói miễn phí trọn đời hoàn toàn phù hợp với ứng dụng của sinh viên."*
 
 ---
 
-### 🖥️ SLIDE 5: SO SÁNH MÔ HÌNH TRUYỀN THỐNG VS MÔ HÌNH CLOUD
-- **Tiêu đề:** Bảng So sánh Trước và Sau khi Tích hợp Cloud
-- **Nội dung chính:**
-
-| Tiêu chí | Mô hình Truyền thống (Local / On-Premise) | Mô hình Tích hợp Cloud (Firebase) |
-| :--- | :--- | :--- |
-| **Phạm vi truy cập** | Chỉ trên thiết bị đơn lẻ hiện tại | Mọi thiết bị (Laptop, Smartphone, Web) |
-| **Sao lưu & An toàn** | Thủ công, rủi ro mất 100% khi hỏng ổ cứng | Tự động sao lưu phân tán trên Google Cloud |
-| **Lưu trữ tệp lớn** | Tiêu tốn bộ nhớ trong của máy khách | Lưu trữ trên Cloud Bucket, hỗ trợ tải theo nhu cầu |
-| **Xác thực người dùng** | Không có hoặc lưu mật khẩu cục bộ thiếu an toàn | Đăng nhập Google chuẩn OAuth 2.0 bảo mật cao |
-| **Tốc độ phản hồi** | Nhanh nhưng cô lập | Giữ tốc độ tức thì (< 5ms) nhờ Local-First + Đồng bộ nền |
-
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Nhìn vào bảng so sánh, mô hình Cloud vượt trội hoàn toàn: sinh viên có thể xem bài giảng trên mọi thiết bị, dữ liệu luôn an toàn, không lo hết bộ nhớ điện thoại và đăng nhập an toàn bằng tài khoản Google."*
+### 🖥️ SLIDE 5: SƠ ĐỒ KIẾN TRÚC TÍCH HỢP CLOUD FIREBASE
+- **Hình ảnh trình chiếu:** Sơ đồ kiến trúc `cloud_architecture_diagram.jpg`
+- **Các tầng kiến trúc:**
+  - Tầng Client (Local-First): Flutter App, Local DAO, SQLite, Reactive Streams.
+  - Tầng Đám mây (Firebase Cloud Services):
+    - Firebase Authentication (Google OAuth 2.0).
+    - Cloud Firestore (NoSQL Collection `study_documents`).
+    - Firebase Cloud Storage (Bucket chứa tệp nhị phân `/study_docs/{userId}/`).
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Kiến trúc của ứng dụng gồm 2 phần tương hỗ: Phía người dùng hoạt động theo chuẩn Local-First đảm bảo tốc độ cao nhất, và phía đám mây Firebase đảm nhiệm 3 vai trò: Xác thực tài khoản Google, CSDL đám mây Firestore và Lưu trữ tệp Storage."*
 
 ---
 
-### 🖥️ SLIDE 6: SƠ ĐỒ KIẾN TRÚC HYBRID CLOUD
-- **Tiêu đề:** Sơ đồ Kiến trúc Hệ thống Hybrid (Local-First + Firebase Cloud)
-- **Nội dung chính:**
-  - **Tầng Client (Local-First):** Tiếp tục sử dụng SQLite / Local DB để ghi chép tức thời, không bị ảnh hưởng khi mất mạng.
-  - **Tầng Trung gian (Sync Engine):** Quản lý hàng đợi đồng bộ hai chiều, tự động gửi dữ liệu lên Cloud khi có Internet.
-  - **Tầng Đám mây (Firebase):** Tiếp nhận xác thực người dùng, lưu trữ metadata Firestore và lưu file tệp Cloud Storage.
-- **Sơ đồ kiến trúc Mermaid:**
-```text
-[ Sinh viên ] ➔ [ Ứng dụng Flutter ] ➔ [ Local SQLite Store (Phản hồi tức thì <5ms) ]
-                                          ↕ (Sync Client chạy nền)
-                                  [ GOOGLE FIREBASE ]
-                 ┌────────────────────────┼────────────────────────┐
-          [ Firebase Auth ]      [ Cloud Firestore ]      [ Firebase Storage ]
-           (Đăng nhập Google)    (Metadata tài liệu)        (Tệp PDF, DOCX)
-```
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Đây là sơ đồ kiến trúc Hybrid Cloud của nhóm em: Ứng dụng vẫn giữ triết lý Local-First của Cashew để phản hồi tức thì dưới 5ms, đồng thời chạy tiến trình đồng bộ nền lên Firebase khi có mạng. Người dùng không bao giờ bị đơ giao diện khi mạng chập chờn."*
+### 🖥️ SLIDE 6: MÔ TẢ LUỒNG DỮ LIỆU ĐỒNG BỘ 2 CHIỀU (DATA FLOW)
+- **Quy trình 5 bước:**
+  1. Người dùng thêm tài liệu mới kèm tệp ➔ Ghi vào CSDL cục bộ ngay tức thì (0ms).
+  2. Đẩy tác vụ vào hàng đợi `SyncQueue`.
+  3. Khi có mạng, tệp tài liệu được tải lên Firebase Cloud Storage ➔ Nhận về Download URL.
+  4. Đẩy Metadata lên Cloud Firestore qua REST API ➔ Đánh dấu `isSynced = true`.
+  5. Đồng bộ kéo (Pull): Tự động cập nhật tài liệu mới từ Cloud về các thiết bị khác theo nguyên tắc *Last-Write-Wins (LWW)*.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Luồng dữ liệu được thiết kế thông minh: luôn lưu vào máy trước để trải nghiệm không bị gián đoạn, sau đó tiến trình đồng bộ nền sẽ tự động tải file lên Storage và cập nhật Firestore."*
 
 ---
 
-### 🖥️ SLIDE 7: LUỒNG DỮ LIỆU ĐỒNG BỘ TỆP TIN (DATA FLOW)
-- **Tiêu đề:** Luồng Dữ liệu khi Tải lên và Đồng bộ Tài liệu
-- **Nội dung chính:**
-  1. **Bước 1:** Sinh viên chọn tải file Slide/Bài tập và bấm "Lưu".
-  2. **Bước 2:** Ứng dụng lưu ngay vào Local DB (cờ `isSynced = false`) ➔ UI cập nhật tức thì.
-  3. **Bước 3:** Tiến trình nền đẩy file nhị phân lên **Firebase Cloud Storage** ➔ Nhận về `Download URL`.
-  4. **Bước 4:** Tiến trình ghi thông tin tài liệu kèm `Download URL` lên **Cloud Firestore**.
-  5. **Bước 5:** Firebase phản hồi thành công ➔ Đổi cờ `isSynced = true` tại máy khách.
-- **Gợi ý hình ảnh:** Sơ đồ tuần tự (Sequence Diagram) 5 bước luồng dữ liệu.
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Quy trình xử lý dữ liệu được thiết kế tối ưu: Giao diện phản hồi ngay lập tức cho người dùng, sau đó tiến trình nền mới đẩy file lên Firebase Storage, lấy đường dẫn URL và lưu metadata vào Firestore."*
+### 🖥️ SLIDE 7: ĐÁNH GIÁ TÁC ĐỘNG (BẢO MẬT, CHI PHÍ, HIỆU SUẤT)
+- **Bảo mật:**
+  - Mã hóa 100% dữ liệu truyền qua HTTPS và lưu trữ AES-256.
+  - Firebase Security Rules đảm bảo người dùng chỉ được xem/sửa tài liệu của mình.
+- **Chi phí:**
+  - 0 VNĐ nhờ gói Spark Plan miễn phí 1GB Firestore và 5GB Cloud Storage.
+- **Hiệu suất:**
+  - 0ms phản hồi giao diện nhờ Local-First.
+  - Tốc độ tải tệp cực nhanh nhờ mạng CDN toàn cầu của Google.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Sau khi tích hợp Cloud, dữ liệu được bảo mật an toàn tuyệt đối, chi phí vận hành bằng 0 đồng và hiệu suất ứng dụng luôn đạt tốc độ tối đa."*
 
 ---
 
-### 🖥️ SLIDE 8: TÍCH HỢP XÁC THỰC GOOGLE TRÊN FLUTTER
-- **Tiêu đề:** Tích hợp Google Sign-In qua Firebase Authentication
-- **Nội dung chính:**
-  - Sử dụng thư viện: `firebase_auth` và `google_sign_in`.
-  - **Ưu điểm vượt trội:**
-    - Sinh viên không cần nhớ thêm tài khoản/mật khẩu mới.
-    - Đăng nhập 1-chạm bằng tài khoản Gmail trường/cá nhân.
-    - Nhận diện avatar, họ tên và định danh bảo mật duy nhất `uid`.
-  - **Đoạn mã cốt lõi:**
-    ```dart
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final OAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    ```
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Tính năng đăng nhập Google mang lại trải nghiệm tiện lợi tối đa: sinh viên chỉ cần bấm 1 chạm để đăng nhập bằng tài khoản Gmail, thông tin cá nhân và tài liệu của mỗi sinh viên được phân lập độc lập qua mã UID."*
+### 🖥️ SLIDE 8: TÌM HIỂU VỀ NỀN TẢNG GOOGLE FIREBASE
+- **Khái niệm:** Nền tảng Backend-as-a-Service (BaaS) hàng đầu thế giới của Google.
+- **Các thành phần cốt lõi sử dụng trong dự án:**
+  - **Firebase Authentication:** Quản lý phiên đăng nhập và định danh người dùng qua tài khoản Google.
+  - **Cloud Firestore:** Cơ sở dữ liệu NoSQL lưu trữ tài liệu phân tán dạng Collections & Documents.
+  - **Cloud Storage:** Lưu trữ an toàn các tệp tin slide PDF, tài liệu DOCX của sinh viên.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Firebase là giải pháp BaaS hoàn chỉnh của Google, giúp nhóm phát triển đầy đủ tính năng đám mây chất lượng cao mà không cần tốn nhiều tháng để tự viết server backend."*
 
 ---
 
-### 🖥️ SLIDE 9: TÍCH HỢP LƯU TRỮ TỆP TÀI LIỆU (FIREBASE STORAGE)
-- **Tiêu đề:** Tích hợp Tải tệp lên Firebase Cloud Storage
-- **Nội dung chính:**
-  - Sử dụng thư viện: `firebase_storage`.
-  - Cấu trúc thư mục đám mây an toàn: `/study_docs/{user_uid}/{filename}`.
-  - Hỗ trợ tải đa định dạng: Slide bài giảng PDF, Bài tập thực hành Word (.docx), Mã nguồn nén (.zip).
-  - Tự động sinh đường dẫn tải xuống an toàn có chữ ký số (Download URL).
-  - Tự động nén và cache tại các máy chủ CDN của Google gần Việt Nam.
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Với Firebase Storage, toàn bộ file bài giảng và bài tập được phân nhóm khoa học theo từng mã sinh viên, đảm bảo tính riêng tư và tốc độ tải xuống cực nhanh nhờ hạ tầng mạng toàn cầu của Google."*
+### 🖥️ SLIDE 9: QUY TRÌNH SETUP THEO TÀI LIỆU CHÍNH THỨC CỦA GOOGLE
+- **Tham khảo:** [https://firebase.google.com/docs/flutter/setup?hl=vi](https://firebase.google.com/docs/flutter/setup?hl=vi)
+- **Các bước thiết lập tự động với FlutterFire CLI:**
+  ```bash
+  # 1. Cài đặt Firebase CLI
+  npm install -g firebase-tools
+
+  # 2. Đăng nhập Google
+  firebase login
+
+  # 3. Kích hoạt FlutterFire CLI
+  dart pub global activate flutterfire_cli
+
+  # 4. Cấu hình tự động dự án Flutter
+  flutterfire configure --project=study-document-cloud
+  ```
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Theo chuẩn của Google, việc tích hợp vào Flutter hiện nay được tự động hóa hoàn toàn thông qua FlutterFire CLI, tự sinh file firebase_options.dart chứa toàn bộ cấu hình nền tảng."*
 
 ---
 
-### 🖥️ SLIDE 10: ĐÁNH GIÁ TÁC ĐỘNG: BẢO MẬT, CHI PHÍ VÀ HIỆU SUẤT
-- **Tiêu đề:** Đánh giá Tác động sau khi Tích hợp Cloud
-- **Nội dung chính:**
-  - 🛡️ **Bảo mật (Security):**
-    - Áp dụng **Firebase Security Rules**: Chỉ cho phép sinh viên đọc/ghi tài liệu thuộc về chính họ (`request.auth.uid == userId`).
-    - Dữ liệu được mã hóa đường truyền (HTTPS/TLS 1.3) và mã hóa tĩnh tại Google Cloud (AES-256).
-  - 💰 **Chi phí (Cost):**
-    - Sử dụng **Gói Spark Miễn phí**: 1GB Firestore, 5GB Cloud Storage, 50,000 lượt đọc/ngày ➔ **Hoàn toàn 0 VNĐ** cho đồ án môn học.
-  - ⚡ **Hiệu suất (Performance):**
-    - Thời gian tải trang ban đầu: **Dưới 0.05 giây** (nhờ Local-First).
-    - Tốc độ tải tệp PDF: Tối đa băng thông mạng (nhờ CDN).
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Về hiệu quả: Hệ thống đạt chuẩn bảo mật cao với Security Rules phân quyền chi tiết, chi phí hoàn toàn 0 đồng trong gói Spark miễn phí trọn đời, và hiệu năng mượt mà không có độ trễ giao diện."*
+### 🖥️ SLIDE 10: CẤU HÌNH DỰ ÁN VỚI TÀI KHOẢN NHÓM THỰC TẾ
+- **Thông tin Dự án nhóm:**
+  - Project ID: `study-document-cloud`
+  - Tài khoản Quản trị: `phamvanhung21122004@gmail.com`
+  - Cấu hình Authentication: Kích hoạt nhà cung cấp Google Sign-In.
+  - Vị trí máy chủ: `asia-southeast1` (Singapore) cho độ trễ kết nối thấp nhất.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Nhóm đã triển khai thực tế trên Firebase Console với tên dự án study-document-cloud, đặt máy chủ tại Singapore để tối ưu tốc độ truy cập cho sinh viên tại Việt Nam."*
 
 ---
 
-### 🖥️ SLIDE 11: QUY TRÌNH 5 BƯỚC SETUP VỚI TÀI KHOẢN CỦA NHÓM
-- **Tiêu đề:** Hướng dẫn Nhóm thiết lập Firebase từ A đến Z
-- **Nội dung chính:**
-  1. **Bước 1: Tạo Project trên Firebase Console**
-     - Đăng nhập bằng Gmail nhóm tại: `console.firebase.google.com`
-     - Tạo dự án mới: Đặt tên `study-document-cloud`.
-  2. **Bước 2: Bật Google Authentication**
-     - Vào menu **Authentication ➔ Sign-in method ➔ Bật Google**.
-  3. **Bước 3: Tạo Cloud Storage Bucket**
-     - Vào menu **Storage ➔ Bấm Get Started**, chọn máy chủ khu vực Châu Á (`asia-southeast1` Singapore).
-  4. **Bước 4: Thêm thành viên nhóm vào dự án**
-     - Vào **Project Settings ➔ Users and permissions ➔ Add member**, nhập email các bạn trong nhóm để cùng quản trị.
-  5. **Bước 5: Liên kết dự án Flutter bằng lệnh CLI**
-     ```bash
-     npm install -g firebase-tools
-     firebase login
-     dart pub global activate flutterfire_cli
-     flutterfire configure
-     ```
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Quy trình thiết lập cho nhóm sinh viên rất trực quan và nhanh chóng: chỉ cần 5 bước thao tác từ việc tạo project trên Firebase Console, kích hoạt đăng nhập Google, tạo bucket lưu trữ, cấp quyền cho các thành viên và chạy lệnh FlutterFire CLI để kết nối tự động vào mã nguồn."*
+### 🖥️ SLIDE 11: MÃ NGUỒN TÍCH HỢP AUTH & STORAGE
+- **Xác thực Google Sign-In:** Sử dụng `GoogleAuthProvider.credential` kết hợp `FirebaseAuth.instance.signInWithCredential`.
+- **Tải tệp tin lên Storage:** Phân quyền theo UID người dùng: `FirebaseStorage.instance.ref('study_docs/${user.uid}/$name').putFile(file)`.
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Mã nguồn Flutter được cấu trúc rõ ràng trong tầng struct, đảm bảo mỗi người dùng có một thư mục riêng biệt trên Cloud Storage và dữ liệu được bảo vệ an toàn."*
 
 ---
 
-### 🖥️ SLIDE 12: TỔNG KẾT, DEMO & HỎI ĐÁP (Q&A)
-- **Tiêu đề:** Tổng kết & Kết quả Đạt được
-- **Nội dung chính:**
-  - ✅ **Hoàn thành 7/7 mục Checklist yêu cầu của đề tài.**
-  - ✅ **Đã lập phương án chuyển đổi Hybrid Cloud tối ưu cho hệ thống Quản lý tài liệu.**
-  - ✅ **Thiết kế chi tiết kiến trúc, luồng dữ liệu, phân tích bảo mật và chi phí.**
-  - ✅ **Đã chuẩn bị sẵn sàng mã nguồn tích hợp Firebase Auth & Storage cho Flutter.**
-  - ❓ **Phần Hỏi đáp (Q&A): Nhóm xin lắng nghe nhận xét và câu hỏi từ Thầy/Cô và các bạn!**
-- 🎙️ **Lời thoại thuyết trình:**
-  > *"Trên đây là toàn bộ báo cáo và phương án tích hợp Cloud cho hệ thống Quản lý tài liệu học tập của nhóm em. Nhóm em xin chân thành cảm ơn Thầy/Cô và các bạn đã chú ý lắng nghe, và nhóm rất mong nhận được những góp ý quý báu ạ!"*
+### 🖥️ SLIDE 12: TỔNG KẾT & KẾT QUẢ ĐẠT ĐƯỢC
+- **Kết quả nghiệm thu:**
+  - Hoàn thành đầy đủ các yêu cầu phân tích kiến trúc, điểm nghẽn, lựa chọn cloud, luồng dữ liệu và đánh giá tác động.
+  - Ứng dụng chạy mượt mà trên Web và Windows Desktop.
+  - Toàn bộ mã nguồn, báo cáo kỹ thuật và slide thuyết trình đã được lưu trữ công khai tại GitHub: [https://github.com/pvhung2112/cloud_study_document_app](https://github.com/pvhung2112/cloud_study_document_app).
+- 🎙️ **Lời thoại thuyết trình (Speaker Notes):**
+  > *"Nhóm xin chân thành cảm ơn Thầy/Cô và các bạn đã chú ý lắng nghe bài thuyết trình. Nhóm rất mong nhận được câu hỏi và ý kiến đóng góp!"*
