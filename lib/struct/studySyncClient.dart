@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../database/study_document_dao.dart';
@@ -48,8 +48,9 @@ class StudySyncClient {
       } else {
         // Gửi trực tiếp lên Google Cloud Firestore REST API
         for (final doc in docsToSync) {
+          // Sử dụng PATCH kèm doc.id để cập nhật đúng bản ghi (Upsert) tránh trùng lặp
           final url = Uri.parse(
-            'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents?key=$apiKey',
+            'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents/${doc.id}?key=$apiKey',
           );
 
           final body = jsonEncode({
@@ -66,7 +67,7 @@ class StudySyncClient {
           });
 
           try {
-            final response = await http.post(
+            final response = await http.patch(
               url,
               headers: {'Content-Type': 'application/json'},
               body: body,
