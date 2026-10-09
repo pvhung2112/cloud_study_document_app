@@ -441,15 +441,8 @@
       </div>
       <h1 class="slide-title">SƠ ĐỒ KIẾN TRÚC HYBRID CLOUD (LOCAL-FIRST + FIREBASE)</h1>
       <div class="slide-content">
-        <div class="box" style="background: #090D16; text-align: center; padding: 24px;">
-          <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; line-height: 1.8; color: #CBD5E1;">
-            <p><strong>[ 👤 Sinh viên ]</strong> ➔ <strong>[ 📱 Ứng dụng Flutter ]</strong> ➔ <strong>[ 💾 Local Store (Phản hồi &lt;5ms) ]</strong></p>
-            <p style="color: var(--primary);">↕ (Tiến trình Đồng bộ Sync Client chạy nền khi có mạng)</p>
-            <p><strong>☁️ [ HỆ SINH THÁI GOOGLE FIREBASE CLOUD ]</strong></p>
-            <p>┌────────────────────────┼────────────────────────┐</p>
-            <p><strong>[ 🔐 Firebase Auth ]</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>[ 📄 Cloud Firestore ]</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>[ 📦 Firebase Storage ]</strong></p>
-            <p>(Google Sign-In Token)&nbsp;&nbsp;&nbsp;&nbsp;(Metadata bài giảng)&nbsp;&nbsp;&nbsp;&nbsp;(File Slide PDF, DOCX)</p>
-          </div>
+        <div style="text-align: center;">
+          <img src="cloud_architecture_diagram.jpg" alt="Sơ đồ Kiến trúc Hybrid Cloud Firebase" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.5);" />
         </div>
         <p style="margin-top: 16px; font-size: 0.95rem; color: var(--text-muted);">
           ★ <em>Điểm đặc sắc:</em> Giữ nguyên nguyên lý Local-First của Cashew. Khi mất mạng, người dùng vẫn thêm/sửa tài liệu bình thường. Khi có mạng trở lại, Sync Engine tự đẩy lên Cloud.
