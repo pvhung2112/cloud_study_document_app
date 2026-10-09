@@ -22,7 +22,7 @@ class CashewStudyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD81B60), // Cashew Pink/Rose accent
+          seedColor: const Color(0xFFD81B60), // Cashew Pink/Rose accent/
           primary: const Color(0xFFD81B60),
           surface: Colors.white,
           background: const Color(0xFFF9F9FB),
