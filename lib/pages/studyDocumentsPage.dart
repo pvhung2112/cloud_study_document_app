@@ -1,4 +1,4 @@
-import '../struct/studySyncClient.dart';
+﻿import '../struct/studySyncClient.dart';
 import 'package:flutter/material.dart';
 import '../struct/studyDocument.dart';
 import '../struct/studyCourse.dart';
@@ -318,7 +318,7 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
     );
   }
 
-  void _showCloudDialog(BuildContext context) {
+    void _showCloudDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) {
@@ -340,62 +340,104 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Tích hợp Firebase Cloud', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    Text('Hệ thống Đám mây Google', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                    Text('Hệ thống Đám mây & Quản trị Nhóm', style: TextStyle(fontSize: 11, color: Colors.grey)),
                   ],
                 ),
               ),
             ],
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(12),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Khối thông tin kết nối Cloud
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.check_circle_rounded, color: Colors.green, size: 18),
+                          SizedBox(width: 8),
+                          Text('Dự án Firebase:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                          Spacer(),
+                          Text('study-document-cloud', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.g_mobiledata_rounded, color: Colors.blue, size: 22),
+                          SizedBox(width: 4),
+                          Text('Google Sign-In:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                          Spacer(),
+                          Text('phamvanhung21122004@gmail.com', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.storage_rounded, color: Colors.orange, size: 18),
+                          SizedBox(width: 8),
+                          Text('Cơ sở dữ liệu:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                          Spacer(),
+                          Text('Cloud Firestore (Active)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.cloud_upload_rounded, color: Colors.purple, size: 18),
+                          SizedBox(width: 8),
+                          Text('Lưu trữ Tệp tin:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                          Spacer(),
+                          Text('Cloud Storage (Active)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                child: const Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.check_circle_rounded, color: Colors.green, size: 18),
-                        SizedBox(width: 8),
-                        Text('Dự án:', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                        Spacer(),
-                        Text('study-document-cloud', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.account_circle_rounded, color: Colors.blue, size: 18),
-                        SizedBox(width: 8),
-                        Text('Tài khoản Google:', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                        Spacer(),
-                        Text('phamvanhung21122004@gmail.com', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.storage_rounded, color: Colors.orange, size: 18),
-                        SizedBox(width: 8),
-                        Text('Cơ sở dữ liệu:', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                        Spacer(),
-                        Text('Cloud Firestore (Active)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ],
+                const SizedBox(height: 14),
+
+                // Danh sách thành viên nhóm (Users and permissions)
+                const Text(
+                  '👥 Thành viên Quản trị Dự án (IAM Roles):',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
-              ),
-              const SizedBox(height: 14),
-              const Text(
-                'Mọi bài giảng, bài tập và môn học được đồng bộ theo cơ chế Local-First (Offline-First) kết hợp đám mây Google.',
-                style: TextStyle(fontSize: 12, color: Colors.black87),
-              ),
-            ],
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.blue.shade100),
+                  ),
+                  child: const Column(
+                    children: [
+                      _MemberRoleRow(name: 'Phạm Văn Hưng', msv: '2351170598', role: 'Owner / Trưởng nhóm'),
+                      Divider(height: 10),
+                      _MemberRoleRow(name: 'Trịnh Trung Kiên', msv: '2251172396', role: 'Editor / Frontend'),
+                      Divider(height: 10),
+                      _MemberRoleRow(name: 'Đỗ Việt Tiến', msv: '2251243452', role: 'Editor / Frontend'),
+                      Divider(height: 10),
+                      _MemberRoleRow(name: 'Cao Đức Đạo', msv: '2351170581', role: 'Editor / Backend'),
+                      Divider(height: 10),
+                      _MemberRoleRow(name: 'Trương Tuấn Hải', msv: '2351170590', role: 'Editor / Cloud Research'),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  '✓ Hỗ trợ phân quyền độc lập, không cần chia sẻ mật khẩu tài khoản Google.',
+                  style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.black54),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -432,6 +474,46 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
           ],
         );
       },
+    );
+  }
+}
+
+class _MemberRoleRow extends StatelessWidget {
+  final String name;
+  final String msv;
+  final String role;
+
+  const _MemberRoleRow({required this.name, required this.msv, required this.role});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.person_pin_rounded, size: 14, color: Colors.blue),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            '$name ($msv)',
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.black87),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          decoration: BoxDecoration(
+            color: role.startsWith('Owner') ? const Color(0xFFFCE4EC) : Colors.white,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: role.startsWith('Owner') ? const Color(0xFFD81B60) : Colors.black12),
+          ),
+          child: Text(
+            role,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: role.startsWith('Owner') ? const Color(0xFFD81B60) : Colors.black54,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
