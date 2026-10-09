@@ -1,3 +1,4 @@
+import '../struct/studySyncClient.dart';
 import 'package:flutter/material.dart';
 import '../struct/studyDocument.dart';
 import '../struct/studyCourse.dart';
@@ -408,15 +409,24 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
               ),
               icon: const Icon(Icons.sync_rounded, size: 16),
               label: const Text('Đồng bộ ngay'),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Đã đồng bộ thành công dữ liệu với Cloud Firestore!'),
-                    backgroundColor: Colors.green,
-                    duration: Duration(seconds: 2),
+                    content: Text('Đang truyền dữ liệu lên Google Cloud Firestore...'),
+                    duration: Duration(seconds: 1),
                   ),
                 );
+                final res = await StudySyncClient().syncWithCloud();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(res.message),
+                      backgroundColor: res.success ? Colors.green : Colors.red,
+                      duration: const Duration(seconds: 3),
+                    ),
+                  );
+                }
               },
             ),
           ],
