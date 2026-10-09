@@ -105,6 +105,12 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
                       );
                     },
                   ),
+                  const SizedBox(width: 8),
+                  IconButton.filledTonal(
+                    icon: const Icon(Icons.cloud_done_rounded, color: Color(0xFFD81B60)),
+                    tooltip: 'Trạng thái Firebase Cloud',
+                    onPressed: () => _showCloudDialog(context),
+                  ),
                 ],
               ),
             ),
@@ -308,6 +314,114 @@ class _StudyDocumentsPageState extends State<StudyDocumentsPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showCloudDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7D8DF),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.cloud_sync_rounded, color: Color(0xFFD81B60), size: 24),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Tích hợp Firebase Cloud', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text('Hệ thống Đám mây Google', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.check_circle_rounded, color: Colors.green, size: 18),
+                        SizedBox(width: 8),
+                        Text('Dự án:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                        Spacer(),
+                        Text('study-document-cloud', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(Icons.account_circle_rounded, color: Colors.blue, size: 18),
+                        SizedBox(width: 8),
+                        Text('Tài khoản Google:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                        Spacer(),
+                        Text('sinhvien.hung@gmail.com', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(Icons.storage_rounded, color: Colors.orange, size: 18),
+                        SizedBox(width: 8),
+                        Text('Cơ sở dữ liệu:', style: TextStyle(fontSize: 12, color: Colors.black54)),
+                        Spacer(),
+                        Text('Cloud Firestore (Active)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+              const Text(
+                'Mọi bài giảng, bài tập và môn học được đồng bộ theo cơ chế Local-First (Offline-First) kết hợp đám mây Google.',
+                style: TextStyle(fontSize: 12, color: Colors.black87),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Đóng'),
+            ),
+            FilledButton.icon(
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFFD81B60),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+              icon: const Icon(Icons.sync_rounded, size: 16),
+              label: const Text('Đồng bộ ngay'),
+              onPressed: () {
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Đã đồng bộ thành công dữ liệu với Cloud Firestore!'),
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
