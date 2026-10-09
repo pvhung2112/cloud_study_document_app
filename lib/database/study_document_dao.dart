@@ -2,6 +2,7 @@ import 'dart:async';
 import 'database_helper.dart';
 import '../struct/studyDocument.dart';
 
+/// Data Access Object (DAO) quản lý truy xuất dữ liệu tài liệu học tập
 class DocumentDao {
   final AppDatabase _db;
   DocumentDao({AppDatabase? database}) : _db = database ?? AppDatabase();

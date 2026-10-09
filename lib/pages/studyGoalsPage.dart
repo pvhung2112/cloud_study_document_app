@@ -37,7 +37,7 @@ class StudyGoalsPage extends StatelessWidget {
                   actions: [
                     TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Hủy')),
                     FilledButton(
-                      style: FilledButton.styleFrom(backgroundColor: const Color(0xFFD81B60)),
+                      style: FilledButton.styleFrom(backgroundColor: const Color(0xFF1E88E5)),
                       onPressed: () async {
                         final title = titleCtrl.text.trim();
                         final count = int.tryParse(countCtrl.text) ?? 5;
@@ -92,14 +92,14 @@ class StudyGoalsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(g.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('${(percent * 100).toInt()}%', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFD81B60))),
+                          Text('${(percent * 100).toInt()}%', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1E88E5))),
                         ],
                       ),
                       const SizedBox(height: 10),
                       LinearProgressIndicator(
                         value: percent,
                         backgroundColor: Colors.grey.shade200,
-                        color: const Color(0xFFD81B60),
+                        color: const Color(0xFF1E88E5),
                         borderRadius: BorderRadius.circular(6),
                         minHeight: 8,
                       ),
