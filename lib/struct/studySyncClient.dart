@@ -1,3 +1,4 @@
+import 'firebaseAuthService.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,7 @@ class StudySyncClient {
 
   /// Tự động lưu 1 bản ghi trực tiếp lên Google Cloud Firestore REST API khi người dùng Thêm / Sửa
   Future<bool> saveToCloud(StudyDocument doc) async {
+    final userEmail = FirebaseAuthService().currentUser?.email ?? 'phamvanhung21122004@gmail.com';
     try {
       final url = Uri.parse(
         'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/study_documents/${doc.id}?key=$apiKey',
@@ -38,7 +40,7 @@ class StudySyncClient {
           'description': {'stringValue': doc.description},
           'fileUrl': {'stringValue': doc.fileUrl},
           'tags': {'stringValue': doc.tags.join(',')},
-          'uploadedBy': {'stringValue': 'phamvanhung21122004@gmail.com'},
+          'uploadedBy': {'stringValue': userEmail},
           'syncedAt': {'stringValue': DateTime.now().toIso8601String()},
         }
       });

@@ -1,3 +1,4 @@
+import '../struct/firebaseAuthService.dart';
 import '../struct/studySyncClient.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -86,6 +87,35 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
   Future<void> _saveDocument() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final authService = FirebaseAuthService();
+    if (!authService.isSignedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.lock_person_rounded, color: Colors.white, size: 20),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text('Vui lòng đăng nhập Google trước khi lưu tài liệu lên Cloud!'),
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFFC2185B),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 4),
+          action: SnackBarAction(
+            label: 'ĐĂNG NHẬP',
+            textColor: Colors.yellow,
+            onPressed: () async {
+              await authService.signInWithGoogle();
+              if (mounted) setState(() {});
+            },
+          ),
+        ),
+      );
+      return;
+    }
+
     final tags = _tagsController.text
         .split(',')
         .map((e) => e.trim())
@@ -165,6 +195,82 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
+            // Trạng thái Xác thực Google Firebase
+            Builder(
+              builder: (context) {
+                final authService = FirebaseAuthService();
+                final signedIn = authService.isSignedIn;
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: signedIn ? Colors.green.shade50 : Colors.amber.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: signedIn ? Colors.green.shade300 : Colors.amber.shade400),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        signedIn ? Icons.check_circle_rounded : Icons.lock_outline_rounded,
+                        size: 22,
+                        color: signedIn ? Colors.green.shade700 : Colors.amber.shade900,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              signedIn
+                                  ? 'Đã đăng nhập: ${authService.currentUser!.displayName} (${authService.currentUser!.role})'
+                                  : 'Chưa đăng nhập Firebase Google',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: signedIn ? Colors.green.shade900 : Colors.amber.shade900,
+                              ),
+                            ),
+                            Text(
+                              signedIn
+                                  ? 'Tài khoản: ${authService.currentUser!.email} (Được phép lưu lên Cloud)'
+                                  : 'Cần đăng nhập Google để tự động lưu tài liệu lên Cloud Firestore',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: signedIn ? Colors.green.shade800 : Colors.amber.shade800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (!signedIn)
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFD81B60),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                          ),
+                          icon: const Icon(Icons.login_rounded, size: 14),
+                          label: const Text('Đăng nhập'),
+                          onPressed: () async {
+                            await authService.signInWithGoogle();
+                            setState(() {});
+                          },
+                        )
+                      else
+                        TextButton(
+                          onPressed: () async {
+                            await authService.signOut();
+                            setState(() {});
+                          },
+                          child: const Text('Đăng xuất', style: TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.bold)),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
+
             // Tiêu đề
             TextFormField(
               controller: _titleController,
