@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'documentLocation.dart';
 
 enum DocumentType {
   lecture,
@@ -70,6 +71,7 @@ class StudyDocument {
   final DateTime updatedAt;
   final bool isPinned;
   final bool isSynced;
+  final DocumentLocation? location;
 
   StudyDocument({
     required this.id,
@@ -85,6 +87,7 @@ class StudyDocument {
     DateTime? updatedAt,
     this.isPinned = false,
     this.isSynced = false,
+    this.location,
   })  : createdAt = createdAt ?? DateTime.now(),
         updatedAt = updatedAt ?? DateTime.now();
 
@@ -102,6 +105,8 @@ class StudyDocument {
     DateTime? updatedAt,
     bool? isPinned,
     bool? isSynced,
+    DocumentLocation? location,
+    bool clearLocation = false,
   }) {
     return StudyDocument(
       id: id ?? this.id,
@@ -117,6 +122,7 @@ class StudyDocument {
       updatedAt: updatedAt ?? this.updatedAt,
       isPinned: isPinned ?? this.isPinned,
       isSynced: isSynced ?? this.isSynced,
+      location: clearLocation ? null : (location ?? this.location),
     );
   }
 
@@ -135,6 +141,7 @@ class StudyDocument {
       'updated_at': updatedAt.toIso8601String(),
       'is_pinned': isPinned ? 1 : 0,
       'is_synced': isSynced ? 1 : 0,
+      'location': location != null ? jsonEncode(location!.toMap()) : null,
     };
   }
 
@@ -145,6 +152,16 @@ class StudyDocument {
         parsedTags = List<String>.from(jsonDecode(map['tags']));
       } catch (_) {
         parsedTags = [];
+      }
+    }
+
+    DocumentLocation? parsedLocation;
+    if (map['location'] != null) {
+      try {
+        final locMap = jsonDecode(map['location'] as String) as Map<String, dynamic>;
+        parsedLocation = DocumentLocation.fromMap(locMap);
+      } catch (_) {
+        parsedLocation = null;
       }
     }
 
@@ -162,6 +179,7 @@ class StudyDocument {
       updatedAt: map['updated_at'] != null ? DateTime.parse(map['updated_at'] as String) : DateTime.now(),
       isPinned: (map['is_pinned'] ?? map['isPinned'] ?? 0) == 1,
       isSynced: (map['is_synced'] ?? map['isSynced'] ?? 0) == 1,
+      location: parsedLocation,
     );
   }
 }

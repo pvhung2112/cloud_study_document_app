@@ -3,13 +3,16 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../struct/studyDocument.dart';
 import '../struct/studyCourse.dart';
+import '../struct/documentLocation.dart';
 import '../database/study_document_dao.dart';
 import '../database/study_course_dao.dart';
+import 'locationMapPage.dart';
 
 class AddEditDocumentPage extends StatefulWidget {
   final StudyDocument? initialDocument;
+  final StudyDocument? document; // alias
 
-  const AddEditDocumentPage({super.key, this.initialDocument});
+  const AddEditDocumentPage({super.key, this.initialDocument, this.document});
 
   @override
   State<AddEditDocumentPage> createState() => _AddEditDocumentPageState();
@@ -31,13 +34,15 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
   DateTime? _selectedDeadline;
   bool _isPinned = false;
   List<Course> _courses = [];
+  DocumentLocation? _selectedLocation;
 
-  bool get _isEdit => widget.initialDocument != null;
+  bool get _isEdit => widget.initialDocument != null || widget.document != null;
+  StudyDocument? get _doc => widget.initialDocument ?? widget.document;
 
   @override
   void initState() {
     super.initState();
-    final doc = widget.initialDocument;
+    final doc = _doc;
     _titleController = TextEditingController(text: doc?.title ?? '');
     _descController = TextEditingController(text: doc?.description ?? '');
     _fileUrlController = TextEditingController(text: doc?.fileUrl ?? '');
@@ -47,6 +52,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
     _selectedStatus = doc?.status ?? DocumentStatus.todo;
     _selectedDeadline = doc?.deadline;
     _isPinned = doc?.isPinned ?? false;
+    _selectedLocation = doc?.location;
 
     _loadCourses();
   }
@@ -91,7 +97,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         .toList();
 
     if (_isEdit) {
-      final updated = widget.initialDocument!.copyWith(
+      final updated = _doc!.copyWith(
         title: _titleController.text.trim(),
         description: _descController.text.trim(),
         fileUrl: _fileUrlController.text.trim(),
@@ -101,6 +107,8 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         tags: tags,
         deadline: _selectedDeadline,
         isPinned: _isPinned,
+        location: _selectedLocation,
+        clearLocation: _selectedLocation == null,
       );
       await _documentDao.update(updated);
     } else {
@@ -115,6 +123,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
         tags: tags,
         deadline: _selectedDeadline,
         isPinned: _isPinned,
+        location: _selectedLocation,
       );
       await _documentDao.insert(newDoc);
     }
@@ -261,7 +270,7 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
             ),
             const SizedBox(height: 16),
 
-            // Tags
+            // Tags - Enhanced with quick-select
             TextFormField(
               controller: _tagsController,
               decoration: const InputDecoration(
@@ -269,6 +278,48 @@ class _AddEditDocumentPageState extends State<AddEditDocumentPage> {
                 hintText: 'KTPM, Cashew, SQLite',
                 prefixIcon: Icon(Icons.tag_rounded),
                 border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Quick-add tags
+            Wrap(
+              spacing: 6,
+              runSpacing: 4,
+              children: ['Flutter', 'Slide', 'Exercise', 'KTPM', 'Cashew', 'Book', 'DAO', 'API'].map((tag) {
+                return InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    final current = _tagsController.text.trim();
+                    final tags = current.split(',').map((t) => t.trim()).where((t) => t.isNotEmpty).toSet();
+                    if (!tags.contains(tag)) {
+                      tags.add(tag);
+                      _tagsController.text = tags.join(', ');
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF7D8DF),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFD81B60).withOpacity(0.2)),
+                    ),
+                    child: Text('+ $tag', style: const TextStyle(fontSize: 11, color: Color(0xFFD81B60), fontWeight: FontWeight.w500)),
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 16),
+
+            // Location Picker
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: LocationPickerWidget(
+                initialLocation: _selectedLocation,
+                onLocationChanged: (loc) => setState(() => _selectedLocation = loc),
               ),
             ),
             const SizedBox(height: 16),

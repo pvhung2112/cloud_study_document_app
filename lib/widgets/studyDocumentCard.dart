@@ -4,6 +4,7 @@ import '../struct/studyDocument.dart';
 import '../struct/studyCourse.dart';
 import '../database/study_course_dao.dart';
 import '../pages/addEditStudyDocumentPage.dart';
+import '../pages/borrowSharePage.dart';
 
 typedef DocumentCard = StudyDocumentCard;
 
@@ -58,6 +59,111 @@ class StudyDocumentCard extends StatelessWidget {
       case DocumentType.reference:
         return Icons.auto_stories_rounded;
     }
+  }
+
+  void _showLocationDetailsDialog(BuildContext context, StudyDocument doc) {
+    final loc = doc.location;
+    if (loc == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tài liệu này chưa được gán vị trí lưu trữ vật lý'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.location_on_rounded, color: Colors.teal, size: 22),
+            ),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Text(
+                'Vị trí lưu trữ vật lý',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              doc.title,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+            ),
+            const SizedBox(height: 12),
+            _buildLocationInfoRow(Icons.place_rounded, 'Địa điểm', loc.locationName, Colors.teal),
+            if (loc.room != null && loc.room!.isNotEmpty)
+              _buildLocationInfoRow(Icons.meeting_room_rounded, 'Phòng', loc.room!, Colors.blue),
+            if (loc.shelf != null && loc.shelf!.isNotEmpty)
+              _buildLocationInfoRow(Icons.shelves, 'Kệ / Ngăn sách', loc.shelf!, Colors.amber.shade800),
+            if (loc.address.isNotEmpty)
+              _buildLocationInfoRow(Icons.map_rounded, 'Địa chỉ', loc.address, Colors.grey.shade700),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.gps_fixed_rounded, size: 14, color: Colors.grey),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Tọa độ: ${loc.latitude.toStringAsFixed(4)}, ${loc.longitude.toStringAsFixed(4)}',
+                    style: const TextStyle(fontSize: 11, fontFamily: 'monospace', color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Đóng'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLocationInfoRow(IconData icon, String label, String value, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 8),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: const TextStyle(fontSize: 13, color: Colors.black87),
+                children: [
+                  TextSpan(text: '$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: value),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -173,6 +279,13 @@ class StudyDocumentCard extends StatelessWidget {
                               builder: (_) => AddEditDocumentPage(initialDocument: document),
                             ),
                           );
+                        } else if (val == 'share') {
+                          showDialog(
+                            context: context,
+                            builder: (_) => ShareDocumentDialog(document: document),
+                          );
+                        } else if (val == 'location') {
+                          _showLocationDetailsDialog(context, document);
                         } else if (val == 'delete' && onDelete != null) {
                           onDelete!();
                         }
@@ -188,6 +301,31 @@ class StudyDocumentCard extends StatelessWidget {
                             ],
                           ),
                         ),
+                        const PopupMenuItem(
+                          value: 'share',
+                          child: Row(
+                            children: [
+                              Icon(Icons.share_rounded, size: 16, color: Colors.indigo),
+                              SizedBox(width: 8),
+                              Text('Chia sẻ quyền xem/sửa'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'location',
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on_rounded,
+                                size: 16,
+                                color: document.location != null ? Colors.teal : Colors.grey,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(document.location != null ? 'Xem vị trí vật lý' : 'Chưa có vị trí'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuDivider(),
                         const PopupMenuItem(
                           value: 'delete',
                           child: Row(
@@ -211,7 +349,6 @@ class StudyDocumentCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    // decoration: isDone ? TextDecoration.lineThrough : null,
                     color: isDone ? Colors.grey : theme.colorScheme.onSurface,
                   ),
                   maxLines: 2,
@@ -225,6 +362,61 @@ class StudyDocumentCard extends StatelessWidget {
                     style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurfaceVariant),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+
+                // Tags chips
+                if (document.tags.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 4,
+                    children: document.tags.take(4).map((tag) => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '#$tag',
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    )).toList(),
+                  ),
+                ],
+
+                // Location badge
+                if (document.location != null) ...[
+                  const SizedBox(height: 8),
+                  InkWell(
+                    onTap: () => _showLocationDetailsDialog(context, document),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.teal.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.teal.withOpacity(0.2)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.location_on_rounded, size: 12, color: Colors.teal),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              document.location!.displayLabel,
+                              style: const TextStyle(fontSize: 11, color: Colors.teal, fontWeight: FontWeight.w500),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
 
