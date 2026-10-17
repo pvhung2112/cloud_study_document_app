@@ -1,3 +1,4 @@
+import 'struct/studySyncClient.dart';
 import 'package:flutter/material.dart';
 import 'widgets/navigationSidebar.dart';
 import 'pages/homePage.dart';
@@ -25,7 +26,7 @@ class CashewStudyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD81B60), // Cashew Pink/Rose accent
+          seedColor: const Color(0xFFD81B60), // Cashew Pink/Rose accent/
           primary: const Color(0xFFD81B60),
           surface: Colors.white,
           background: const Color(0xFFF9F9FB),
@@ -45,6 +46,12 @@ class MainLayoutScreen extends StatefulWidget {
 
 class _MainLayoutScreenState extends State<MainLayoutScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    StudySyncClient().pullFromCloud();
+  }
 
   void _onNavigate(int index) {
     setState(() => _currentIndex = index);

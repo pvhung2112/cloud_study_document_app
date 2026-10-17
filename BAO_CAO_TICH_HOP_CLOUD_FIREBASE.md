@@ -26,7 +26,7 @@
 4. [Checklist 4: Thiết kế sơ đồ kiến trúc tích hợp Cloud và mô tả luồng dữ liệu](#4-checklist-4-thiết-kế-sơ-đồ-kiến-trúc-tích-hợp-cloud-và-mô-tả-luồng-dữ-liệu)
 5. [Checklist 5: Đánh giá tác động về Bảo mật, Chi phí và Hiệu suất sau tích hợp](#5-checklist-5-đánh-giá-tác-động-về-bảo-mật-chi-phí-và-hiệu-suất-sau-tích-hợp)
 6. [Checklist 6: Triển khai kỹ thuật Firebase: Đăng nhập Google & Lưu trữ đám mây](#6-checklist-6-triển-khai-kỹ-thuật-firebase-đăng-nhập-google--lưu-trữ-đám-mây)
-7. [Checklist 7: Bộ Slide tìm hiểu Firebase và Quy trình Setup tài khoản nhóm](#7-checklist-7-bộ-slide-tìm-hiểu-firebase-và-quy-trình-setup-tài-khoản-nhóm)
+7. [Checklist 7: Hướng dẫn thực hành: Bây giờ bắt đầu từ đâu? (Quy trình Setup chi tiết cho nhóm)](#7-checklist-7-hướng-dẫn-thực-hành-bây-giờ-bắt-đầu-từ-đâu-quy-trình-setup-chi-tiết-cho-nhóm)
 
 ---
 
@@ -58,6 +58,18 @@ Khi vận hành trên mô hình cục bộ hoặc máy chủ vật lý truyền 
 5. **Chi phí và rủi ro nếu tự vận hành máy chủ riêng (On-Premise Server Burden):**
    - Tự dựng máy chủ riêng đòi hỏi chi phí mua phần cứng, duy trì mạng IP tĩnh 24/7, tiền điện và chi phí bảo trì lỗ hổng bảo mật.
 
+### 2.2. Bảng So Sánh Đối Đầu: Mô Hình Truyền Thống vs. Mô Hình Sau Khi Tích Hợp Cloud
+
+| Tiêu chí So sánh | Mô hình Truyền thống (Local / On-Premise) | Mô hình Sau Tích hợp Cloud (Firebase Hybrid Cloud) | Lợi ích Đạt được |
+| :--- | :--- | :--- | :--- |
+| **Kiến trúc Hạ tầng** | Cục bộ trên từng máy hoặc Máy chủ vật lý tự dựng | Hybrid Cloud (Local-First kết hợp Google Cloud Serverless) | Tận dụng tốc độ của máy khách và sức mạnh của Cloud |
+| **Khả năng Truy cập & Đồng bộ** | Bị cô lập (Data Silo); chỉ truy cập được trên 1 thiết bị đơn lẻ | Đồng bộ đa nền tảng (Web, Mobile, Desktop) theo thời gian thực | Học tập mọi lúc, mọi nơi (Anytime, Anywhere) |
+| **Lưu trữ Tệp tin (Storage)** | Giới hạn bởi ổ cứng máy (dễ đầy bộ nhớ điện thoại) | Google Cloud Storage (Object Storage không giới hạn dung lượng) | Lưu trữ hàng nghìn slide PDF, giáo trình không lo tràn bộ nhớ |
+| **An toàn Dữ liệu & Sao lưu** | Rủi ro mất trắng nếu hỏng máy, mất điện thoại (Điểm hỏng đơn - SPOF) | Tự động sao lưu phân tán đa vùng (Multi-Region), SLA 99.99% | Không bao giờ mất dữ liệu học tập quan trọng |
+| **Bảo mật & Phân quyền** | Khó kiểm soát, chia sẻ file qua USB/Zalo dễ lộ lọt | Xác thực Google Sign-In, Phân quyền IAM (Owner/Editor/Viewer) & Rules | Bảo mật cấp doanh nghiệp, kiểm soát truy cập chặt chẽ |
+| **Khả năng Mở rộng (Scalability)** | Rất khó; phải mua thêm ổ cứng, nâng cấp máy chủ thủ công | Tự động co giãn (Auto-scaling) từ vài người đến hàng chục nghìn người | Hệ thống luôn mượt mà khi lượng người dùng tăng đột biến |
+| **Chi phí Đầu tư & Vận hành** | Tốn kém (mua máy chủ, IP tĩnh, tiền điện 24/7, bảo trì phần cứng) | Gói Google Spark Plan miễn phí 100%, không tốn chi phí phần cứng | Tiết kiệm tối đa ngân sách triển khai của sinh viên |
+
 ---
 
 ## 3. Checklist 3: Lựa chọn mô hình triển khai Cloud phù hợp & Các dịch vụ cụ thể
@@ -84,12 +96,78 @@ Nhóm đề xuất mô hình **Hybrid Cloud** kết hợp giữa:
 
 ## 4. Checklist 4: Thiết kế sơ đồ kiến trúc tích hợp Cloud và mô tả luồng dữ liệu
 
-### 4.1. Sơ đồ Kiến trúc Hệ thống Hybrid Cloud
+### 4.1. Sơ đồ Kiến trúc Hệ thống Hybrid Cloud (Hình ảnh & Bản vẽ Kiến trúc)
+
+Hệ thống được thiết kế theo mô hình Hybrid Cloud kết hợp lưu trữ cục bộ Local-First và dịch vụ đám mây Google Firebase:
+
+#### 🖼️ Hình ảnh Sơ đồ Kiến trúc Chi tiết (High-Resolution Diagram):
 Sơ đồ kiến trúc chi tiết đã được xuất ra định dạng hình ảnh độ phân giải cao tại tệp: `cloud_architecture_diagram.jpg`
 
 ![Sơ đồ Kiến trúc Hybrid Cloud](cloud_architecture_diagram.jpg)
 
-### 4.2. Mô tả Luồng dữ liệu (Data Flow) giữa Ứng dụng và Đám mây
+#### 📐 Bản vẽ Sơ đồ Kiến trúc Hệ thống (Mermaid Architecture Diagram):
+```mermaid
+graph TB
+    classDef clientClass fill:#d0e1fd,stroke:#4a86e8,stroke-width:2px,color:#000;
+    classDef authClass fill:#ffe599,stroke:#d6b656,stroke-width:2px,color:#000;
+    classDef dbClass fill:#d9ead3,stroke:#6aa84f,stroke-width:2px,color:#000;
+    classDef storageClass fill:#fce5cd,stroke:#e69138,stroke-width:2px,color:#000;
+    classDef cdnClass fill:#e1d5e7,stroke:#9673a6,stroke-width:2px,color:#000;
+
+    subgraph ClientDevice [" 📱 THIẾT BỊ NGƯỜI DÙNG (LOCAL-FIRST CLIENT) "]
+        UI["Flutter Presentation Layer<br/>(Tabs Bài giảng, Bài tập, Lọc Môn học)"]:::clientClass
+        LocalStore[("Local SQLite / In-Memory Store<br/>(Nguồn sự thật tại máy khách)")]:::clientClass
+        SyncClient["Local-First Sync Engine<br/>(Hàng đợi đồng bộ nền & Giải quyết xung đột)"]:::clientClass
+    end
+
+    subgraph FirebaseCloud [" ☁️ GOOGLE FIREBASE CLOUD ECOSYSTEM "]
+        Auth["Firebase Authentication<br/>(Google Sign-In OAuth 2.0 / JWT Token)"]:::authClass
+        Firestore[("Cloud Firestore NoSQL<br/>(Tài liệu, Môn học, Trạng thái, Metadata)")]:::dbClass
+        Storage["Firebase Cloud Storage<br/>(Chứa File PDF Slide, DOCX, ZIP Bài tập)"]:::storageClass
+        CDN["Google Global Cloud CDN<br/>(Bộ nhớ đệm phân phối file tốc độ cao)"]:::cdnClass
+    end
+
+    UI -->|"1. Thao tác ghi/sửa tức thì"| LocalStore
+    LocalStore -->|"2. Lắng nghe thay đổi"| SyncClient
+    SyncClient -->|"3. Gửi Token xác thực"| Auth
+    Auth -->|"4. Cấp quyền truy cập (UID/Claims)"| SyncClient
+    SyncClient -->|"5. Đồng bộ Metadata JSON hai chiều"| Firestore
+    UI -->|"6. Tải tệp tài liệu lên trực tiếp"| Storage
+    Storage -->|"7. Phân phối tệp qua CDN"| CDN
+    CDN -->|"8. Tải tệp xuống nhanh chóng"| UI
+```
+
+---
+
+### 4.2. Sơ đồ Luồng Dữ liệu Tuần tự (DFD / Sequence Data Flow Diagram)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor SinhVien as 👤 Sinh viên
+    participant FlutterApp as 📱 Flutter App (Local-First)
+    participant FirebaseAuth as 🔐 Firebase Auth (Google)
+    participant CloudStorage as 📦 Firebase Storage (Files)
+    participant Firestore as 📄 Cloud Firestore (Metadata)
+
+    SinhVien->>FlutterApp: Bấm "Đăng nhập với Google"
+    FlutterApp->>FirebaseAuth: Yêu cầu xác thực tài khoản Google
+    FirebaseAuth-->>FlutterApp: Trả về UserCredential & Auth Token (JWT)
+
+    SinhVien->>FlutterApp: Thêm bài giảng & Đính kèm file Slide.pdf
+    FlutterApp->>FlutterApp: Lưu Metadata vào Local DB (Phản hồi tức thì 0ms)
+    
+    rect rgb(240, 248, 255)
+        Note over FlutterApp,CloudStorage: Tiến trình đồng bộ nền (Background Sync Queue)
+        FlutterApp->>CloudStorage: Tải file Slide.pdf lên bucket (/study_docs/{uid}/)
+        CloudStorage-->>FlutterApp: Trả về Download URL của file
+        FlutterApp->>Firestore: Ghi Metadata tài liệu kèm fileUrl lên Firestore
+        Firestore-->>FlutterApp: Xác nhận đồng bộ thành công
+        FlutterApp->>FlutterApp: Cập nhật cờ isSynced = true tại Local DB
+    end
+```
+
+### 4.3. Mô tả Chi tiết Luồng dữ liệu (Data Flow) giữa Ứng dụng và Đám mây
 1. **Luồng Thao tác Cục bộ (Local Write Flow):**
    - Khi sinh viên tạo mới một bài giảng/bài tập và đính kèm tệp tin PDF, ứng dụng lưu bản ghi vào CSDL cục bộ với cờ `isSynced = false`.
    - UI cập nhật ngay tức thì (0ms latency), không chờ phản hồi mạng.
@@ -224,23 +302,101 @@ class FirebaseCloudStorageService {
 
 ---
 
-## 7. Checklist 7: Bộ Slide tìm hiểu Firebase và Quy trình Setup tài khoản nhóm
+## 7. Checklist 7: Hướng dẫn thực hành: Bây giờ bắt đầu từ đâu? (Quy trình Setup chi tiết cho nhóm)
 
-Chi tiết nội dung slide trình chiếu của nhóm và hướng dẫn các bước thiết lập cho tài khoản nhóm sinh viên:
+👉 **Slide thuyết trình chính thức của nhóm (Canva):**  
+[https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0](https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0)  
+👉 **Slide tương tác HTML:** [SLIDE_THUYET_TRINH_FIREBASE.html](./SLIDE_THUYET_TRINH_FIREBASE.html) | **Đề cương Markdown:** [SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md](./SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md)
 
-👉 **Slide thuyết trình (Canva chính thức của nhóm):** [https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0](https://www.canva.com/design/DAHXgJp2D-Q/XdIccVLAMSyM2NgV1ar3zw/edit?ui=eyJBIjp7fX0)  
-👉 **Slide thuyết trình tương tác HTML (Mở trực tiếp trên trình duyệt):** [SLIDE_THUYET_TRINH_FIREBASE.html](./SLIDE_THUYET_TRINH_FIREBASE.html)  
-👉 **Đề cương nội dung slide chi tiết:** [SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md](./SLIDE_THUYET_TRINH_FIREBASE_CLOUD.md)
+---
 
-### Tóm tắt 5 bước thực hành thiết lập cho nhóm sinh viên:
-1. **Bước 1:** Trưởng nhóm vào [Firebase Console](https://console.firebase.google.com/) bằng tài khoản Gmail của nhóm (`phamvanhung21122004@gmail.com`), chọn **"Add project"** và đặt tên dự án `study-document-cloud`.
-2. **Bước 2:** Vào mục **Build ➔ Authentication ➔ Sign-in method**, kích hoạt nhà cung cấp **Google** và chọn email hỗ trợ của dự án.
-3. **Bước 3:** Vào mục **Build ➔ Cloud Firestore & Storage**, bấm **Get started**, chọn máy chủ khu vực gần Việt Nam (`asia-southeast1` Singapore).
-4. **Bước 4:** Thêm các thành viên nhóm vào dự án: Vào **Project settings ➔ Users and permissions ➔ Add member**, nhập email các thành viên trong nhóm để cùng làm việc.
-5. **Bước 5:** Mở terminal dự án chạy lệnh cấu hình tự động FlutterFire:
-   ```bash
-   npm install -g firebase-tools
-   firebase login
-   dart pub global activate flutterfire_cli
-   flutterfire configure --project=study-document-cloud
+### 🚀 BÂY GIỜ BẮT ĐẦU TỪ ĐÂU? (THỨ TỰ THỰC HIỆN TỪNG BƯỚC)
+
+#### 📍 Bước 1 — Tạo Firebase Project cho nhóm
+1. **Mở Firebase Console:** Truy cập [https://console.firebase.google.com/](https://console.firebase.google.com/).
+2. **Dùng tài khoản Google do nhóm thống nhất:** Đăng nhập bằng Gmail nhóm (`phamvanhung21122004@gmail.com`).
+3. **Tạo Project mới:** Bấm **"Add project"**, đặt tên project là:
+   ```text
+   quan-ly-tai-lieu-hoc-tap   (hoặc: study-document-cloud)
    ```
+4. **Thêm các thành viên trong nhóm vào Project:**
+   - Một thành viên quản lý project (Trưởng nhóm).
+   - Sau đó thêm các thành viên còn lại vào phần: **Project settings ➔ Users and permissions ➔ Add member**.
+   - Điền email của từng thành viên trong nhóm (Kiên, Tiến, Đạo, Hải) và chọn vai trò **Editor** hoặc **Owner**.
+   - 💡 **Ưu điểm vượt trội:** *Không cần chia sẻ mật khẩu tài khoản Google; Firebase hỗ trợ phân quyền từng thành viên độc lập.*
+
+5. **⚠️ Lưu ý đặc biệt về Cloud Storage for Firebase & Gói Blaze (Billing & Cost Alert):**
+   - **Chính sách của Firebase:** Dịch vụ Cloud Storage for Firebase hiện yêu cầu project sử dụng **gói Blaze (trả theo mức sử dụng - Pay-as-you-go)** để kích hoạt Default Storage Bucket.
+   - **Hạn mức miễn phí thực tế (Free Tier):** Dù ở gói Blaze, Google vẫn tặng miễn phí hàng tháng:
+     - **5 GB** dung lượng lưu trữ tệp tin.
+     - **1 GB** băng thông tải xuống mỗi ngày.
+     - **20.000 lượt ghi**, **50.000 lượt đọc** Firestore mỗi ngày.
+     *(Hoàn toàn không mất phí nếu ứng dụng ở quy mô bài tập nhóm sinh viên).*
+   - **Hành động an toàn trước khi bật thanh toán:**
+     - Hãy thống nhất trong toàn nhóm.
+     - Vào mục **Google Cloud Console ➔ Billing ➔ Budgets & alerts** để thiết lập ngân sách cảnh báo (ví dụ đặt ngưỡng $1 / tháng để nhận email cảnh báo tức thì, tuyệt đối không bị trừ tiền ngoài ý muốn).
+   - **Phương án thay thế thông minh (Zero-Card Strategy của nhóm):**
+     - Nhóm đã xây dựng cơ chế **Local-First + Firestore REST API** để đồng bộ dữ liệu tài liệu kèm link/base64 hoàn toàn miễn phí trọn đời mà không bắt buộc sinh viên phải liên kết thẻ thanh toán quốc tế!
+
+---
+
+#### 📍 Bước 2 — Cấu hình Firebase cho dự án Flutter
+Sau khi tạo project trên Firebase Console, mở Terminal tại thư mục dự án Flutter (`D:droidteam\study_document_app`):
+
+```bash
+# 1. Cài đặt Firebase CLI toàn cục (yêu cầu Node.js)
+npm install -g firebase-tools
+
+# 2. Đăng nhập vào tài khoản Google của nhóm
+firebase login
+
+# 3. Kích hoạt FlutterFire CLI toàn cục
+dart pub global activate flutterfire_cli
+
+# 4. Tự động liên kết mã nguồn Flutter với Project Firebase
+flutterfire configure --project=study-document-cloud
+```
+> *(Lệnh `flutterfire configure` sẽ tự động đăng ký các nền tảng Web, Android, Windows, macOS, iOS vào Firebase Console và sinh ra tệp `lib/firebase_options.dart` hoàn toàn tự động).*
+
+---
+
+#### 📍 Bước 3 — Kích hoạt Firebase Authentication (Đăng nhập Google)
+1. Trong Firebase Console, vào **Build ➔ Authentication ➔ Get started**.
+2. Chọn tab **Sign-in method ➔ Chọn Google ➔ Bật Enable**.
+3. Điền tên hiển thị và chọn Email hỗ trợ của dự án (`phamvanhung21122004@gmail.com`).
+4. Nếu chạy trên Android: Lấy mã SHA-1 (`cd android && ./gradlew signingReport`) và thêm vào **Project Settings ➔ Your apps ➔ Add fingerprint**.
+
+---
+
+#### 📍 Bước 4 — Kích hoạt Cloud Firestore Database
+1. Vào **Build ➔ Firestore Database ➔ Create database**.
+2. Chọn vị trí máy chủ: `asia-southeast1` (Singapore) để đường truyền về Việt Nam có tốc độ nhanh nhất.
+3. Trong tab **Rules**, thiết lập quy tắc bảo mật theo định danh người dùng:
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /study_documents/{docId} {
+         allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+       }
+     }
+   }
+   ```
+
+---
+
+#### 📍 Bước 5 — Kích hoạt Cloud Storage cho tệp bài giảng & slide
+1. Vào **Build ➔ Storage ➔ Get started**.
+2. Chọn vị trí máy chủ `asia-southeast1`.
+3. Phân quyền thư mục lưu trữ theo UID người dùng: `/study_docs/{userId}/{fileName}` để đảm bảo tính riêng tư của từng sinh viên.
+
+---
+
+#### 📍 Bước 6 — Khởi chạy & Kiểm tra Đồng bộ thực tế
+1. Chạy ứng dụng trên trình duyệt Chrome hoặc Windows:
+   ```bash
+   flutter pub get
+   flutter run -d chrome
+   ```
+2. Mở ứng dụng, tạo bài giảng/bài tập mới, bấm **"Đồng bộ Cloud"**.
+3. Mở Firebase Console kiểm tra dữ liệu đã xuất hiện ngay tức thì trong Firestore Database!

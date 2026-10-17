@@ -47,59 +47,7 @@ class AppDatabase {
       _courses[c3.id] = c3;
     }
 
-    if (_documents.isEmpty) {
-      final d1 = StudyDocument(
-        id: 'doc-1',
-        title: 'Bài tập lớn: Thiết kế mô-đun Sync Engine cho Quản lý Tài liệu',
-        courseId: 'c1',
-        type: DocumentType.exercise,
-        status: DocumentStatus.inProgress,
-        description: 'Yêu cầu phân tách rõ DAO, Service, Presentation và viết Unit Test theo kiến trúc Cashew',
-        deadline: DateTime.now().add(const Duration(days: 2)),
-        tags: ['KTPM', 'Cashew', 'Sync'],
-        isPinned: true,
-        isSynced: true,
-      );
-
-      final d2 = StudyDocument(
-        id: 'doc-2',
-        title: 'Slide Chương 4: Phân tích Kiến trúc Cashew & Local-First',
-        courseId: 'c1',
-        type: DocumentType.lecture,
-        status: DocumentStatus.completed,
-        description: 'Tài liệu chi tiết về phân tầng App Experience, Features, Data & Storage',
-        tags: ['Slide', 'Lecture'],
-        isSynced: true,
-      );
-
-      final d3 = StudyDocument(
-        id: 'doc-3',
-        title: 'Giáo trình Flutter Cookbook & Reactive State with Drift',
-        courseId: 'c2',
-        type: DocumentType.reference,
-        status: DocumentStatus.todo,
-        description: 'Sách hướng dẫn sử dụng Drift ORM SQLite trên Flutter',
-        tags: ['Flutter', 'Book'],
-        isSynced: false,
-      );
-
-      final d4 = StudyDocument(
-        id: 'doc-4',
-        title: 'Bài tập thực hành 2: Viết truy vấn lọc tài liệu theo khóa ngoại Course',
-        courseId: 'c3',
-        type: DocumentType.exercise,
-        status: DocumentStatus.todo,
-        description: 'Thực hành viết DAO query và filter logic',
-        deadline: DateTime.now().add(const Duration(days: 5)),
-        tags: ['Exercise', 'DAO'],
-        isSynced: true,
-      );
-
-      _documents[d1.id] = d1;
-      _documents[d2.id] = d2;
-      _documents[d3.id] = d3;
-      _documents[d4.id] = d4;
-    }
+    // Không dùng dữ liệu tài liệu tĩnh: Dữ liệu được đồng bộ trực tiếp từ Google Firebase Cloud Firestore!
 
     if (_goals.isEmpty) {
       final g1 = StudyGoal(

@@ -79,6 +79,8 @@ void main() {
     });
 
     test('4. Kiểm thử chiến lược Sao lưu và Phục hồi (Backup & Restore Strategy)', () async {
+      final doc = StudyDocument(id: 'backup-doc-1', title: 'Test Backup Document', courseId: 'c1', type: DocumentType.lecture);
+      await documentDao.insert(doc);
       final backupJson = database.exportBackupJson();
       expect(backupJson.isNotEmpty, isTrue);
       expect(backupJson.contains('SE301'), isTrue);

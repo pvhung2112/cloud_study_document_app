@@ -93,6 +93,11 @@ class DocumentDao {
     return _db.getAllDocuments().where((d) => !d.isSynced).toList();
   }
 
+  Future<void> saveFromCloud(StudyDocument doc) async {
+    final syncedDoc = doc.copyWith(isSynced: true);
+    await _db.insertDocument(syncedDoc);
+  }
+
   Future<void> markAsSynced(List<String> ids) async {
     for (var id in ids) {
       final doc = _db.getDocument(id);
